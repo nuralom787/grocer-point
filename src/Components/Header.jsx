@@ -7,7 +7,9 @@ import Image from "next/image";
 import SearchForm from "./forms/SearchForm";
 
 
-const Header = () => {
+const Header = async () => {
+    const res = await fetch("http://localhost:3000/api/categories");
+    const categories = await res.json();
 
     return (
         <div className='header sticky top-0 z-20'>
@@ -59,8 +61,8 @@ const Header = () => {
                                 Category
                                 <IoIosArrowDown />
                             </div>
-                            <ul tabIndex={0} className="dropdown-content menu flex-nowrap bg-white rounded-box z-1 min-w-max max-h-screen overflow-y-auto p-2 pt-3 mt-2 shadow-sm">
-                                {/* {categories?.categories?.map(category => <li key={category._id}>
+                            <ul tabIndex={0} className="dropdown-content menu bg-white rounded-box z-1 min-w-max max-h-screen overflow-y-auto p-2 pt-3 mt-2 shadow-sm">
+                                {categories?.map(category => <li key={category._id}>
                                     <Link
                                         href={`/search?category=${encodeURIComponent(category.parent)}&_id=${category._id}`}
                                         className="inline-flex justify-between items-center gap-4 my-1 hover:text-green-900"
@@ -72,7 +74,7 @@ const Header = () => {
                                         <IoIosArrowForward className="text-end" />
                                     </Link>
                                 </li>)
-                                } */}
+                                }
                             </ul>
                         </div>
                         <Link className="hover:text-green-900 duration-300" href="/">About Us</Link>

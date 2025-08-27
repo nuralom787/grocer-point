@@ -1,8 +1,15 @@
+import Banner from "@/Components/Banner";
+import Categories from "@/Components/Categories";
+import DiscountProducts from "@/Components/DiscountProducts";
+import PopularProducts from "@/Components/PopularProducts";
 
 export default function Home() {
   return (
-    <div className="">
-      <h1>Hello</h1>
+    <div className="space-y-16">
+      <Banner />
+      <Categories />
+      <PopularProducts />
+      <DiscountProducts />
     </div>
   );
 }
