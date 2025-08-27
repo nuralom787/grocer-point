@@ -5,10 +5,11 @@ import { IoIosArrowForward, IoIosArrowDown } from "react-icons/io";
 import logo from "../../public/logo.jpg";
 import Image from "next/image";
 import SearchForm from "./forms/SearchForm";
+const url = process.env.NEXTAUTH_URL;
 
 
 const Header = async () => {
-    const res = await fetch("http://localhost:3000/api/categories");
+    const res = await fetch(`${url}/api/categories`);
     const categories = await res.json();
 
     return (

@@ -7,12 +7,13 @@ import slider2 from '../../public/Slider/slider-2.png'
 import slider3 from '../../public/Slider/slider-3.png'
 import Image from "next/image";
 import { useEffect, useState } from "react";
+const url = process.env.NEXTAUTH_URL;
 
 const Banner = () => {
     const [coupons, setCoupons] = useState([]);
 
     useEffect(() => {
-        fetch("http://localhost:3000/api/coupons")
+        fetch(`${url}/api/coupons`)
             .then(res => res.json())
             .then(data => setCoupons(data))
     }, []);
