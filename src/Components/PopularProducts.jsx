@@ -4,7 +4,7 @@ import delivery from '../../public/delivery.svg';
 const url = process.env.NEXTAUTH_URL;
 
 const PopularProducts = async () => {
-    const res = await fetch(`${url}}/api/products`);
+    const res = await fetch(`${url}/api/products`);
     const products = await res.json();
 
 
