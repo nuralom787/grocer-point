@@ -5,6 +5,8 @@ import InfoNav from "@/Components/InfoNav";
 import Header from "@/Components/Header";
 import Advertisement from "@/Components/Advertisement";
 import Footer from "@/Components/Footer";
+import NextAuthSessionProviders from "@/Providers/NextAuthSessionProviders";
+import { ToastContainer } from "react-toastify";
 
 const poppins = Poppins({
   weight: "400",
@@ -19,15 +21,18 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" data-theme="light">
-      <body className={`${poppins.className} bg-gray-50`}>
-        <InfoNav />
-        <Header />
-        <main className="container-width px-2 lg:px-6">
-          {children}
-        </main>
-        <Advertisement />
-        <Footer />
-      </body>
+      <ToastContainer />
+      <NextAuthSessionProviders>
+        <body className={`${poppins.className} bg-gray-50`}>
+          <InfoNav />
+          <Header />
+          <main className="container-width px-2 lg:px-6">
+            {children}
+          </main>
+          <Advertisement />
+          <Footer />
+        </body>
+      </NextAuthSessionProviders>
     </html>
   );
 }

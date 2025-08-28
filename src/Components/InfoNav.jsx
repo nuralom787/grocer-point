@@ -1,9 +1,10 @@
 import Link from "next/link";
 import { MdOutlinePhoneInTalk } from "react-icons/md";
-import { LuLock } from "react-icons/lu";
-import { FiUser } from "react-icons/fi";
+import AuthOptions from "./AuthOptions";
 
-const InfoNav = () => {
+const InfoNav = async () => {
+
+
     return (
         <div className="info-nav hidden lg:block">
             <section className="container-width px-6 text-[#151515] py-2 flex justify-between items-center">
@@ -23,15 +24,7 @@ const InfoNav = () => {
                         <Link href="/user/my-account">My Account</Link>
                     </li>
                     <span>|</span>
-                    {/* {user?.email ?
-                        <button onClick={handleLogout} className="hover:text-[#28A745] font-poppins cursor-pointer duration-300 inline-flex items-center gap-1">
-                            <LuLock /> Logout
-                        </button>
-                        : */}
-                    <Link href="/user/login" className="hover:text-[#28A745] font-poppins cursor-pointer duration-300 inline-flex items-center gap-1">
-                        <FiUser /> Login
-                    </Link>
-                    {/* } */}
+                    <AuthOptions />
                 </ul>
             </section>
         </div>

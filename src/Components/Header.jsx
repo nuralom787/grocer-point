@@ -1,16 +1,17 @@
 import Link from "next/link";
 import { FiShoppingCart } from "react-icons/fi";
-import { FaRegUser } from "react-icons/fa";
 import { IoIosArrowForward, IoIosArrowDown } from "react-icons/io";
 import logo from "../../public/logo.jpg";
 import Image from "next/image";
 import SearchForm from "./forms/SearchForm";
+import ProfileImage from "./user/ProfileImage";
 const url = process.env.NEXTAUTH_URL;
 
 
 const Header = async () => {
     const res = await fetch(`${url}/api/categories`);
     const categories = await res.json();
+
 
     return (
         <div className='header sticky top-0 z-20'>
@@ -28,27 +29,7 @@ const Header = async () => {
                                 </p>
                             </Link>
                         </li>
-                        <li>
-                            <Link href="/user/my-account">
-                                {/* {user?.email ?
-                                        <div>
-                                            {user?.photoURL ?
-                                                (<img
-                                                    src={user.photoURL}
-                                                    alt={user.displayName}
-                                                    className="w-11 h-11 rounded-full object-cover"
-                                                />)
-                                                :
-                                                <div className="w-11 h-11 rounded-full bg-gray-300 flex items-center justify-center text-black text-xl font-bold">
-                                                    {getInitial(name)}
-                                                </div>
-                                            }
-                                        </div>
-                                        : */}
-                                <FaRegUser className="text-3xl" />
-                                {/* } */}
-                            </Link>
-                        </li>
+                        <ProfileImage />
                     </ul>
                 </div>
             </div>

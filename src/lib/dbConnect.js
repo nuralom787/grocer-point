@@ -6,6 +6,7 @@ export const collectionsNames = {
     discountProductsCollection: "discountProducts",
     categoriesCollection: "categories",
     couponsCollection: "coupons",
+    customersCollection: "customers",
 }
 
 const dbConnect = (collectionName) => {
