@@ -13,7 +13,7 @@ const SearchForm = () => {
             router.push('/');
         }
         else {
-            router.push(`/search?search=${encodeURIComponent(data.search)}`);
+            router.push(`/search?search=${data.search}`);
         }
         // reset();
     };

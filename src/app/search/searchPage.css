@@ -1,0 +1,47 @@
+.search1 {
+    background-image: url('../../../public/search1.jpg');
+    background-repeat: no-repeat;
+}
+
+
+.search2 {
+    background-image: url('../../../public/search2.jpg');
+    background-repeat: no-repeat;
+}
+
+
+.search3 {
+    background-image: url('../../../public/search3.jpg');
+    background-repeat: no-repeat;
+}
+
+
+/* -----------Swiper Styles -------------- */
+
+.swiper-button-prev,
+.swiper-button-next {
+    background: #63e075;
+    top: 55% !important;
+    height: fit-content !important;
+    width: fit-content !important;
+    padding: 10px;
+}
+
+.swiper-button-prev::after,
+.swiper-button-next::after {
+    color: white !important;
+    font-size: 10px !important;
+    font-weight: 600;
+}
+
+.swiper-button-prev {
+    left: 0% !important;
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+}
+
+.swiper-button-next {
+    right: 0% !important;
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+}

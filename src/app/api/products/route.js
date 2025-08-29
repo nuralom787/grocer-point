@@ -2,8 +2,48 @@ import dbConnect, { collectionsNames } from "@/lib/dbConnect";
 import { NextResponse } from "next/server";
 
 export const GET = async (req) => {
-    const collections = dbConnect(collectionsNames.productsCollection);
-    const products = await collections.find({}).toArray();
+    const productsCollection = dbConnect(collectionsNames.productsCollection);
 
-    return NextResponse.json(products);
+    const searchParams = req.nextUrl.searchParams;
+    // const size = parseInt(searchParams.get('size'));
+    // const page = parseInt(searchParams.get('page'));
+    const search = searchParams.get('search');
+    const parent = searchParams.get('parent');
+    const children = searchParams.get('children');
+    const price = searchParams.get('price');
+
+    let count;
+    let products;
+    const sortValue = price === "asc" ? 1 : -1;
+
+    if (search) {
+        const query = { title: { $regex: search, $options: 'i' } }
+        const foundedData = await productsCollection.find(query).sort({ price: sortValue }).toArray();
+        products = foundedData
+        count = foundedData.length;
+    }
+    if (children) {
+        const query = { children: { $regex: children, $options: 'i' } }
+        const foundedData = await productsCollection.find(query).sort({ price: sortValue }).toArray();
+        products = foundedData
+        count = foundedData.length;
+    }
+    if (parent) {
+        const query = { parent: { $regex: parent, $options: 'i' } }
+        const foundedData = await productsCollection.find(query).sort({ price: sortValue }).toArray();
+        products = foundedData
+        count = foundedData.length;
+    }
+    else {
+        products = await productsCollection.find().sort({ price: sortValue }).toArray();
+        count = await productsCollection.estimatedDocumentCount();
+    };
+
+    const totalCount = await productsCollection.estimatedDocumentCount();
+
+    return NextResponse.json({
+        totalCount,
+        count,
+        products,
+    });
 };

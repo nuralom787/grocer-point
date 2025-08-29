@@ -12,7 +12,8 @@ const Banner = () => {
     const [coupons, setCoupons] = useState([]);
 
     useEffect(() => {
-        fetch(`https://grocerpoint.vercel.app/api/coupons`)
+        const localUrl = "https://grocerpoint.vercel.app";
+        fetch(`${localUrl}/api/coupons`)
             .then(res => res.json())
             .then(data => setCoupons(data))
     }, []);
@@ -22,26 +23,26 @@ const Banner = () => {
         if (completed) {
             return (
                 <p className='space-x-1.5'>
-                    <span className='text-red-600 text-xs xl:text-sm font-semibold font-poppins bg-[#ffc7c7] py-0.5 xl:py-1 px-2 xl:px-3.5 rounded-sm'>0{days}</span>
+                    <span className='text-red-600 text-xs font-extrabold font-poppins bg-[#ffc7c7] py-0.5 px-2.5 rounded-xs'>0{days}</span>
                     <span>:</span>
-                    <span className='text-red-600 text-xs xl:text-sm font-semibold font-poppins bg-[#ffc7c7] py-0.5 xl:py-1 px-2 xl:px-3.5 rounded-sm'>0{hours}</span>
+                    <span className='text-red-600 text-xs font-extrabold font-poppins bg-[#ffc7c7] py-0.5 px-2.5 rounded-xs'>0{hours}</span>
                     <span>:</span>
-                    <span className='text-red-600 text-xs xl:text-sm font-semibold font-poppins bg-[#ffc7c7] py-0.5 xl:py-1 px-2 xl:px-3.5 rounded-sm'>0{minutes}</span>
+                    <span className='text-red-600 text-xs font-extrabold font-poppins bg-[#ffc7c7] py-0.5 px-2.5 rounded-xs'>0{minutes}</span>
                     <span>:</span>
-                    <span className='text-red-600 text-xs xl:text-sm font-semibold font-poppins bg-[#ffc7c7] py-0.5 xl:py-1 px-2 xl:px-3.5 rounded-sm'>0{seconds}</span>
+                    <span className='text-red-600 text-xs font-extrabold font-poppins bg-[#ffc7c7] py-0.5 px-2.5 rounded-xs'>0{seconds}</span>
                 </p>
             );
         }
         else {
             return (
                 <p className='space-x-1.5'>
-                    <span className='text-green-600 text-xs xl:text-sm font-semibold font-poppins bg-[#c7f3c7] py-0.5 xl:py-1 px-2 xl:px-3.5 rounded-sm'>{days}</span>
+                    <span className='text-green-900 text-xs font-extrabold font-poppins bg-[#c7f3c7] py-0.5 px-2.5 rounded-xs'>{days}</span>
                     <span>:</span>
-                    <span className='text-green-600 text-xs xl:text-sm font-semibold font-poppins bg-[#c7f3c7] py-0.5 xl:py-1 px-2 xl:px-3.5 rounded-sm'>{hours}</span>
+                    <span className='text-green-900 text-xs font-extrabold font-poppins bg-[#c7f3c7] py-0.5 px-2.5 rounded-xs'>{hours}</span>
                     <span>:</span>
-                    <span className='text-green-600 text-xs xl:text-sm font-semibold font-poppins bg-[#c7f3c7] py-0.5 xl:py-1 px-2 xl:px-3.5 rounded-sm'>{minutes}</span>
+                    <span className='text-green-900 text-xs font-extrabold font-poppins bg-[#c7f3c7] py-0.5 px-2.5 rounded-xs'>{minutes}</span>
                     <span>:</span>
-                    <span className='text-green-600 text-xs xl:text-sm font-semibold font-poppins bg-[#c7f3c7] py-0.5 xl:py-1 px-2 xl:px-3.5 rounded-sm'>{seconds}</span>
+                    <span className='text-green-900 text-xs font-extrabold font-poppins bg-[#c7f3c7] py-0.5 px-2.5 rounded-xs'>{seconds}</span>
                 </p>
             );
         }
@@ -87,7 +88,7 @@ const Banner = () => {
                         </div>
                     </Carousel>
                 </div>
-                <div className='hidden lg:block w-full xl:w-2/5 border-2 border-[#8B4513] hover:border-green-700 rounded-lg'>
+                <div className='hidden lg:block w-full xl:w-2/5 border-2 border-[#8B4513] hover:border-green-600 rounded-lg'>
                     <h1 className='font-poppins font-semibold text-xl bg-orange-200 p-4 text-center rounded-ss-lg rounded-se-lg'>
                         Latest Offer Discount Codes.
                     </h1>
@@ -128,8 +129,8 @@ const Banner = () => {
                                                 }
                                             </div>
                                         </div>
-                                        <div className='bg-gray-100 w-7 h-7 rounded-full absolute -top-3.5 -right-3.5 z-10'></div>
-                                        <div className='bg-gray-100 w-7 h-7 rounded-full absolute -bottom-3.5 -right-3.5 z-10'></div>
+                                        <div className='bg-gray-50 w-7 h-7 rounded-full absolute -top-3.5 -right-3.5 z-10'></div>
+                                        <div className='bg-gray-50 w-7 h-7 rounded-full absolute -bottom-3.5 -right-3.5 z-10'></div>
                                     </div>
                                     <div className='text-center space-y-2'>
                                         <button
