@@ -4,8 +4,8 @@ import delivery from '../../public/delivery.svg';
 const localUrl = "https://grocerpoint.vercel.app";
 
 const PopularProducts = async () => {
-    const res = await fetch(`${localUrl}/api/products`);
-    const products = await res.json();
+    const res = await fetch(`${localUrl}/api/popularProducts`);
+    const popularProducts = await res.json();
 
 
     return (
@@ -19,7 +19,7 @@ const PopularProducts = async () => {
             <div className="py-14">
                 <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2">
                     {
-                        products?.products?.slice(0, 18)?.map(product => <div
+                        popularProducts?.slice(0, 18)?.map(product => <div
                             className="bg-white rounded-md relative"
                             key={product?._id}
                         >

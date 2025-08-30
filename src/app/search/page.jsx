@@ -1,6 +1,7 @@
 import './searchPage.css';
 import SearchSwiper from "./Components/SearchSwiper";
 import SearchProducts from './Components/SearchProducts';
+import { Suspense } from 'react';
 
 const SearchPage = () => {
     return (
@@ -32,7 +33,9 @@ const SearchPage = () => {
                 <SearchSwiper />
 
                 {/* Search Products */}
-                <SearchProducts />
+                <Suspense fallback={<div>Loading search...</div>}>
+                    <SearchProducts />
+                </Suspense>
             </section>
         </section>
     );

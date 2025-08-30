@@ -10,7 +10,7 @@ import Image from 'next/image';
 
 const SearchSwiper = () => {
     const [categories, setCategories] = useState([]);
-    const localUrl = "http://localhost:3000";
+    const localUrl = "https://grocerpoint.vercel.app";
 
     useEffect(() => {
         fetch(`${localUrl}/api/categories`)

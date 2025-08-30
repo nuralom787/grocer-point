@@ -11,13 +11,13 @@ export const GET = async (req) => {
     const parent = searchParams.get('parent');
     const children = searchParams.get('children');
     const price = searchParams.get('price');
-    const searchWords = search.split(" ");
 
     let count;
     let products;
     const sortValue = price === "asc" ? 1 : -1;
 
     if (search !== "null") {
+        const searchWords = search.split(" ");
         const query = { $or: searchWords.map(word => ({ title: { $regex: word, $options: "i" } })) };
         const foundedData = await productsCollection.find(query).sort({ price: sortValue }).toArray();
         products = foundedData

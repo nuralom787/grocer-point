@@ -3,6 +3,7 @@ const uri = process.env.NEXT_PUBLIC_MONGODB_URI;
 
 export const collectionsNames = {
     productsCollection: "products",
+    popularProductsCollection: "popularProducts",
     discountProductsCollection: "discountProducts",
     categoriesCollection: "categories",
     couponsCollection: "coupons",

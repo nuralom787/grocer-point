@@ -6,7 +6,7 @@ import noFound from '../../../../public/notFound.svg';
 import Link from "next/link";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
-const localUrl = "http://localhost:3000";
+const localUrl = "https://grocerpoint.vercel.app";
 
 const SearchProducts = () => {
     const [matchProduct, setMatchProduct] = useState([]);
@@ -26,7 +26,7 @@ const SearchProducts = () => {
             .then(res => res.json())
             .then(data => {
                 setMatchProduct(data.products);
-                console.log(data);
+                // console.log(data);
                 setVisibleCount(18)
                 setLoading(false);
             })
