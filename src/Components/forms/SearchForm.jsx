@@ -15,7 +15,7 @@ const SearchForm = () => {
         else {
             router.push(`/search?search=${data.search}`);
         }
-        // reset();
+        reset();
     };
 
     return (

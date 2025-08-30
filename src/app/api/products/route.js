@@ -11,24 +11,25 @@ export const GET = async (req) => {
     const parent = searchParams.get('parent');
     const children = searchParams.get('children');
     const price = searchParams.get('price');
+    const searchWords = search.split(" ");
 
     let count;
     let products;
     const sortValue = price === "asc" ? 1 : -1;
 
-    if (search) {
-        const query = { title: { $regex: search, $options: 'i' } }
+    if (search !== "null") {
+        const query = { $or: searchWords.map(word => ({ title: { $regex: word, $options: "i" } })) };
         const foundedData = await productsCollection.find(query).sort({ price: sortValue }).toArray();
         products = foundedData
         count = foundedData.length;
     }
-    if (children) {
+    else if (children !== "null") {
         const query = { children: { $regex: children, $options: 'i' } }
         const foundedData = await productsCollection.find(query).sort({ price: sortValue }).toArray();
         products = foundedData
         count = foundedData.length;
     }
-    if (parent) {
+    else if (parent !== "null") {
         const query = { parent: { $regex: parent, $options: 'i' } }
         const foundedData = await productsCollection.find(query).sort({ price: sortValue }).toArray();
         products = foundedData

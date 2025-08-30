@@ -19,7 +19,7 @@ const Categories = async () => {
                     {
                         categories?.map(category => <Link
                             key={category?._id}
-                            href={`/search?parent=${encodeURIComponent(category?.parent)}&_id=${category?._id}`}
+                            href={`/search?parent=${encodeURIComponent(category?.parent)}&id=${category?._id}`}
                             className="bg-white p-4 group"
                         >
                             <li className="flex items-center gap-3">

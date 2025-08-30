@@ -12,7 +12,7 @@ const Banner = () => {
     const [coupons, setCoupons] = useState([]);
 
     useEffect(() => {
-        const localUrl = "https://grocerpoint.vercel.app";
+        const localUrl = "http://localhost:3000";
         fetch(`${localUrl}/api/coupons`)
             .then(res => res.json())
             .then(data => setCoupons(data))
