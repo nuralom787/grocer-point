@@ -6,11 +6,11 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { useEffect, useState } from "react";
 import Link from 'next/link';
 import Image from 'next/image';
+const localUrl = "https://grocerpoint.vercel.app";
 
 
 const SearchSwiper = () => {
     const [categories, setCategories] = useState([]);
-    const localUrl = "https://grocerpoint.vercel.app";
 
     useEffect(() => {
         fetch(`${localUrl}/api/categories`)

@@ -1,10 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import delivery from '../../public/delivery.svg';
-const localUrl = "https://grocerpoint.vercel.app";
+const url = process.env.NEXTAUTH_URL;
 
 const PopularProducts = async () => {
-    const res = await fetch(`${localUrl}/api/popularProducts`);
+    const res = await fetch(`${url}/api/popularProducts`);
     const popularProducts = await res.json();
 
 
