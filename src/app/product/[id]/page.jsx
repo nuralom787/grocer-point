@@ -7,13 +7,15 @@ import { IoRepeat } from "react-icons/io5";
 import { MdOutlineWbSunny } from "react-icons/md";
 import { CiLocationOn } from "react-icons/ci";
 
-const url = process.env.NEXTAUTH_URL;
+// const url = process.env.NEXTAUTH_URL;
+const url = "https://grocerpoint.vercel.app";
 
 const SingleProduct = async ({ params }) => {
     const id = await params.id;
-    const res = await fetch(`${url}/api/product/${id}`);
-    const product = await res.json();
-
+    const productRes = await fetch(`${url}/api/product/${id}`);
+    const product = await productRes.json();
+    const relatedProductRes = await fetch(`${url}/api/products?parent=${product.parent}`);
+    const relatedProduct = await relatedProductRes.json();
 
     // Handle Cart Quantity Plus.
     // const handleMinusQuantity = () => {
@@ -124,20 +126,9 @@ const SingleProduct = async ({ params }) => {
                 </div>
                 <div className="mt-14">
                     <h1 className="text-lg font-poppins text-[#151515] my-4 font-semibold">Related Products</h1>
-                    {/* {!relatedProduct?.length ?
-                        <div className="flex justify-center items-center my-32">
-                            <ScaleLoader
-                                color={"#63e075"}
-                                loading={true}
-                                size={500}
-                                aria-label="Loading Spinner"
-                                data-testid="loader"
-                            />
-                        </div>
-                        : */}
-                    {/* <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2">
+                    <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2">
                         {
-                            relatedProduct?.slice(0, 18).map(product => <div className="bg-white rounded-md relative" key={product?._id}>
+                            relatedProduct?.products?.slice(0, 18)?.map(product => <div className="bg-white rounded-md relative" key={product?._id}>
                                 <Link className="group" href={`/product/${product?._id}`}>
                                     <p className="absolute top-2 left-2 bg-gray-200 px-3 py-1 rounded-full text-[#63e075] text-xs z-10">
                                         Stock: <span className="text-red-700">{product?.quantity}</span>
@@ -164,8 +155,7 @@ const SingleProduct = async ({ params }) => {
                                 </Link>
                             </div>)
                         }
-                    </div> */}
-                    {/* } */}
+                    </div>
                 </div>
             </div>
         </section>

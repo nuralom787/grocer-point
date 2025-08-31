@@ -16,20 +16,20 @@ export const GET = async (req) => {
     let products;
     const sortValue = price === "asc" ? 1 : -1;
 
-    if (search !== "null") {
+    if (search && search !== "null") {
         const searchWords = search.split(" ");
         const query = { $or: searchWords.map(word => ({ title: { $regex: word, $options: "i" } })) };
         const foundedData = await productsCollection.find(query).sort({ price: sortValue }).toArray();
         products = foundedData
         count = foundedData.length;
     }
-    else if (children !== "null") {
+    else if (children && children !== "null") {
         const query = { children: { $regex: children, $options: 'i' } }
         const foundedData = await productsCollection.find(query).sort({ price: sortValue }).toArray();
         products = foundedData
         count = foundedData.length;
     }
-    else if (parent !== "null") {
+    else if (parent && parent !== "null") {
         const query = { parent: { $regex: parent, $options: 'i' } }
         const foundedData = await productsCollection.find(query).sort({ price: sortValue }).toArray();
         products = foundedData

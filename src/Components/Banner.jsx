@@ -68,7 +68,7 @@ const Banner = () => {
                                 <p className='text-gray-700 text-xs md:text-sm line-clamp-1 md:line-clamp-2 lg:line-clamp-3'>Intrinsicly fashion performance based products rather than accurate benefits...</p>
                                 <button className='font-semibold text-sm text-white px-3.5 lg:px-6 py-1.5 lg:py-3 rounded-full lg:rounded-md bg-green-900 cursor-pointer mt-3 lg:mt-0'>Shop Now</button>
                             </div>
-                            <Image src={slider1} alt="Grocer Point Banner 1 Logo" loading="lazy" />
+                            <Image src={slider1} alt="Grocer Point Banner 1 Logo" loading="eager" />
                         </div>
                         <div className='relative'>
                             <div className='font-poppins w-3/6 absolute top-1/4 left-5 lg:left-14 text-start space-y-0.5 md:space-y-2 lg:space-y-4'>
@@ -76,7 +76,7 @@ const Banner = () => {
                                 <p className='text-gray-700 text-xs md:text-sm line-clamp-1 md:line-clamp-2 lg:line-clamp-3'>Intrinsicly fashion performance based products rather than accurate benefits...</p>
                                 <button className='font-semibold text-sm text-white px-3.5 lg:px-6 py-1.5 lg:py-3 rounded-full lg:rounded-md bg-green-900 cursor-pointer mt-3 lg:mt-0'>Shop Now</button>
                             </div>
-                            <Image src={slider2} alt="Grocer Point Banner 2 Logo" loading="lazy" />
+                            <Image src={slider2} alt="Grocer Point Banner 2 Logo" loading="eager" />
                         </div>
                         <div className='relative'>
                             <div className='font-poppins w-3/6 absolute top-1/4 left-5 lg:left-14 text-start space-y-0.5 md:space-y-2 lg:space-y-4'>
@@ -84,7 +84,7 @@ const Banner = () => {
                                 <p className='text-gray-700 text-xs md:text-sm line-clamp-1 md:line-clamp-2 lg:line-clamp-3'>Intrinsicly fashion performance based products rather than accurate benefits...</p>
                                 <button className='font-semibold text-sm text-white px-3.5 lg:px-6 py-1.5 lg:py-3 rounded-full lg:rounded-md bg-green-900 cursor-pointer mt-3 lg:mt-0'>Shop Now</button>
                             </div>
-                            <Image src={slider3} alt="Grocer Point Banner 3 Logo" loading="lazy" />
+                            <Image src={slider3} alt="Grocer Point Banner 3 Logo" loading="eager" />
                         </div>
                     </Carousel>
                 </div>

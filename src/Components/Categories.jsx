@@ -23,7 +23,7 @@ const Categories = async () => {
                             className="bg-white p-4 group"
                         >
                             <li className="flex items-center gap-3">
-                                <Image src={category?.icon} alt={category?.parent} width={36} height={36} loading="lazy" />
+                                <Image src={category?.icon} alt={category?.parent} width={36} height={36} loading="eager" />
                                 <div className="font-poppins">
                                     <h3 className="text-sm text-[#151515] group-hover:text-[#8B4513]">{category?.parent}</h3>
                                     <ul className="">

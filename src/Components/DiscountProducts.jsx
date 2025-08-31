@@ -33,7 +33,7 @@ const DiscountProducts = async () => {
                                         alt={product?.title}
                                         width={100}
                                         height={100}
-                                        loading="lazy"
+                                        loading="eager"
                                     />
                                 </div>
                                 <div className="font-poppins text-[#151515] px-4 pb-4">

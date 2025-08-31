@@ -37,7 +37,7 @@ const PopularProducts = async () => {
                                         alt={product?.title}
                                         width={100}
                                         height={100}
-                                        loading="lazy"
+                                        loading="eager"
                                     />
                                 </div>
                                 <div className="text-[#151515] px-4 pb-4">
@@ -62,7 +62,7 @@ const PopularProducts = async () => {
                         </p>
                         <button className="bg-green-900 text-white font-semibold text-xs px-6 py-2 mt-3 lg:mt-6 rounded-full cursor-pointer">Download App</button>
                     </div>
-                    <Image className="w-2/4 hidden md:block" src={delivery} alt="Delivery Logo" loading="lazy" />
+                    <Image className="w-2/4 hidden md:block" src={delivery} alt="Delivery Logo" loading="eager" />
                 </div>
             </div>
         </div>

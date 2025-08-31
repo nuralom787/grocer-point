@@ -18,7 +18,7 @@ const Header = async () => {
             {/* Header */}
             <div className="bg-green-900">
                 <div className="container-width px-2 lg:px-6 text-[#151515] py-4 grid grid-cols-1 lg:grid-cols-10 gap-10">
-                    <Image className="col-span-2 hidden lg:block" src={logo} alt="Grocer Point Logo" width={50} height={50} loading="lazy" />
+                    <Image className="col-span-2 hidden lg:block" src={logo} alt="Grocer Point Logo" width={50} height={50} loading="eager" />
                     <SearchForm />
                     <ul className="col-span-2 hidden lg:flex justify-end items-center gap-10 text-white text-3xl">
                         <li>

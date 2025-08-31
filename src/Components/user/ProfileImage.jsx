@@ -26,7 +26,7 @@ const ProfileImage = () => {
                                 alt={session?.data?.user?.name}
                                 width={44}
                                 height={44}
-                                loading="lazy"
+                                loading="eager"
                                 className="rounded-full object-cover"
                             />)
                             :
