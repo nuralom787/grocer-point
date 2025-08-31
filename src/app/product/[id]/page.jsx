@@ -15,7 +15,8 @@ const SingleProduct = async ({ params }) => {
     const productRes = await fetch(`${url}/api/product/${id}`);
     const product = await productRes.json();
     const relatedProductRes = await fetch(`${url}/api/products?parent=${product.parent}`);
-    const relatedProduct = await relatedProductRes.json();
+    const relatedProductJson = await relatedProductRes.json();
+    const relatedProduct = relatedProductJson?.products?.filter(p => p._id !== product._id);
 
     // Handle Cart Quantity Plus.
     // const handleMinusQuantity = () => {
@@ -128,7 +129,7 @@ const SingleProduct = async ({ params }) => {
                     <h1 className="text-lg font-poppins text-[#151515] my-4 font-semibold">Related Products</h1>
                     <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2">
                         {
-                            relatedProduct?.products?.slice(0, 18)?.map(product => <div className="bg-white rounded-md relative" key={product?._id}>
+                            relatedProduct?.slice(0, 18).map(product => <div className="bg-white rounded-md relative" key={product?._id}>
                                 <Link className="group" href={`/product/${product?._id}`}>
                                     <p className="absolute top-2 left-2 bg-gray-200 px-3 py-1 rounded-full text-[#63e075] text-xs z-10">
                                         Stock: <span className="text-red-700">{product?.quantity}</span>
