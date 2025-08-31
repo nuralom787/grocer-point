@@ -23,7 +23,7 @@ const PopularProducts = async () => {
                             className="bg-white rounded-md relative"
                             key={product?._id}
                         >
-                            <Link className="group" href={`/product/${product?._id}`}>
+                            <Link className="group" href={`/product/${product?._id.toString()}`}>
                                 <p className="absolute top-2 left-2 bg-gray-200 px-3 py-1 rounded-full text-green-900 text-xs z-10">
                                     Stock: <span className="text-red-700">{product?.quantity}</span>
                                 </p>

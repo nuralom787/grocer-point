@@ -19,7 +19,7 @@ const Categories = async () => {
                     {
                         categories?.map(category => <Link
                             key={category?._id}
-                            href={`/search?parent=${encodeURIComponent(category?.parent)}&id=${category?._id}`}
+                            href={`/search?parent=${category?.parent}&id=${category?._id.toString()}`}
                             className="bg-white p-4 group"
                         >
                             <li className="flex items-center gap-3">
@@ -29,7 +29,7 @@ const Categories = async () => {
                                     <ul className="">
                                         {
                                             category?.children?.slice(0, 3).map(item => <li key={item} className="text-gray-500 text-xs hover:text-[#8B4513] hover:ms-2 duration-300">
-                                                <Link href={`/search?parent=${encodeURIComponent(category.parent)}&children=${encodeURIComponent(item)}`} className="flex items-center gap-0.5 py-0.5">
+                                                <Link href={`/search?parent=${category.parent}&children=${item}`} className="flex items-center gap-0.5 py-0.5">
                                                     <IoIosArrowForward /> {item}
                                                 </Link>
                                             </li>)
