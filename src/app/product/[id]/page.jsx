@@ -6,9 +6,10 @@ import { PiCurrencyDollarDuotone } from "react-icons/pi";
 import { IoRepeat } from "react-icons/io5";
 import { MdOutlineWbSunny } from "react-icons/md";
 import { CiLocationOn } from "react-icons/ci";
+import ProductQuantityBtn from "../components/ProductQuantityBtn";
 
-// const url = process.env.NEXTAUTH_URL;
-const url = "https://grocerpoint.vercel.app";
+const url = process.env.NEXTAUTH_URL;
+// const url = "http://localhost:3000";
 
 const SingleProduct = async ({ params }) => {
     const id = await params.id;
@@ -17,21 +18,6 @@ const SingleProduct = async ({ params }) => {
     const relatedProductRes = await fetch(`${url}/api/products?parent=${product.parent}`);
     const relatedProductJson = await relatedProductRes.json();
     const relatedProduct = relatedProductJson?.products?.filter(p => p._id !== product._id);
-
-    // Handle Cart Quantity Plus.
-    // const handleMinusQuantity = () => {
-    //     if (newQuantity !== 1) {
-    //         const updateQuantity = newQuantity - 1;
-    //         setNewQuantity(updateQuantity);
-    //     };
-    // };
-
-
-    // Handle Cart Quantity Minus.
-    // const handlePlusQuantity = () => {
-    //     const updateQuantity = newQuantity + 1;
-    //     setNewQuantity(updateQuantity);
-    // };
 
 
     return (
@@ -62,29 +48,11 @@ const SingleProduct = async ({ params }) => {
                             <h1 className="font-bold text-3xl">${product?.price.toFixed(2)}</h1>
                             <p className="font-normal text-base text-gray-500">{product?.description}</p>
                             <div className='grid grid-cols-2 gap-2'>
-                                <div className='border-2 border-gray-300 rounded-md flex justify-between items-center'>
-                                    <button className="px-4 py-4 border-r-2 border-gray-300 cursor-pointer"
-                                    // onClick={handleMinusQuantity}
-                                    >
-                                        <svg stroke="currentColor" fill="none" strokeWidth="2" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                                    </button>
-                                    <p className="text-base font-semibold">{1}</p>
-                                    <button className="px-4 py-4 border-l-2 border-gray-300 cursor-pointer"
-                                    // onClick={handlePlusQuantity}
-                                    >
-                                        <svg stroke="currentColor" fill="none" strokeWidth="2" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                                    </button>
-                                </div>
-                                <button
-                                    className='px-4 py-4 bg-gray-800 hover:bg-gray-900 duration-500 cursor-pointer rounded-md text-sm font-extrabold text-white'
-                                // onClick={addToCart}
-                                >
-                                    Add To Cart
-                                </button>
+                                <ProductQuantityBtn id={id} product={product} />
                             </div>
                             <div className="space-y-3">
                                 <p className="font-medium text-sm">
-                                    Category: <Link href={`/search?category=${encodeURIComponent(product?.parent)}&_id=${product?._id}`} className="text-[#151515] hover:text-[#63e075] underline cursor-pointer"> {product?.parent}</Link>
+                                    Category: <Link href={`/search?parent=${product?.parent}&id=${product?._id.toString()}`} className="text-[#151515] hover:text-green-700 underline cursor-pointer"> {product?.parent}</Link>
                                 </p>
                                 <ul className="flex items-center gap-3">
                                     {

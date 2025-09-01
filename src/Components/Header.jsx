@@ -5,12 +5,24 @@ import logo from "../../public/logo.jpg";
 import Image from "next/image";
 import SearchForm from "./forms/SearchForm";
 import ProfileImage from "./user/ProfileImage";
+import { getServerSession } from "next-auth";
 const url = process.env.NEXTAUTH_URL;
 
+// const localUrl = "http://localhost:3000";
 
 const Header = async () => {
-    const res = await fetch(`${url}/api/categories`);
-    const categories = await res.json();
+    const session = await getServerSession();
+    const categoryRes = await fetch(`${url}/api/categories`);
+    const categories = await categoryRes.json();
+
+    let cart = {};
+
+    if (session) {
+        console.log("From header: ", session)
+        const cartRes = await fetch(`${url}/api/cart/${session?.user?.email}`);
+        cart = await cartRes.json();
+    };
+
 
 
     return (
@@ -25,7 +37,7 @@ const Header = async () => {
                             <Link href="/user/cart" className="relative">
                                 <FiShoppingCart className="text-4xl" />
                                 <p className="absolute -top-2 -right-2 inline-flex items-center justify-center bg-red-600 text-white text-sm p-3 h-5 w-5 rounded-full">
-                                    {0}
+                                    {cart.cartTotalQuantity ? cart?.cartTotalQuantity : 0}
                                 </p>
                             </Link>
                         </li>

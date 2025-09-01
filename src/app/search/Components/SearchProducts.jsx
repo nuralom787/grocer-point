@@ -7,6 +7,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 const localUrl = "https://grocerpoint.vercel.app";
+// const localUrl = "http://localhost:3000";
 
 const SearchProducts = () => {
     const [matchProduct, setMatchProduct] = useState([]);
