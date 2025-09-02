@@ -1,13 +1,13 @@
 import { getServerSession } from "next-auth";
 import Image from "next/image";
 import Link from "next/link";
-import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { IoBagHandle, IoWalletOutline } from "react-icons/io5";
 import { RiShoppingBasketLine } from "react-icons/ri";
 import CartItemDelAndFabBtn from "./components/CartItemDelAndFabBtn";
 import CartItemQuantityBtn from "./components/CartItemQuantityBtn";
 import CartCouponApplyBtn from "./components/CartCouponApplyBtn";
 import CartCheckoutBtn from "./components/CartCheckoutBtn";
+import { headers } from "next/headers";
 const url = process.env.NEXTAUTH_URL;
 // const url = "http://localhost:3000";
 
@@ -17,8 +17,8 @@ const Cart = async () => {
     let cart = {};
 
     if (session) {
-        // console.log("From header: ", session)
         const cartRes = await fetch(`${url}/api/cart/${session?.user?.email}`, {
+            headers: new Headers(await headers()),
             cache: "force-cache"
         });
         cart = await cartRes.json();
