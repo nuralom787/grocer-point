@@ -7,8 +7,8 @@ import SearchForm from "./forms/SearchForm";
 import ProfileImage from "./user/ProfileImage";
 import { getServerSession } from "next-auth";
 const url = process.env.NEXTAUTH_URL;
+// const url = "http://localhost:3000";
 
-// const localUrl = "http://localhost:3000";
 
 const Header = async () => {
     const session = await getServerSession();
@@ -18,7 +18,7 @@ const Header = async () => {
     let cart = {};
 
     if (session) {
-        console.log("From header: ", session)
+        // console.log("From header: ", session)
         const cartRes = await fetch(`${url}/api/cart/${session?.user?.email}`);
         cart = await cartRes.json();
     };
