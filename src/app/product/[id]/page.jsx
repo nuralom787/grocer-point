@@ -6,7 +6,7 @@ import { PiCurrencyDollarDuotone } from "react-icons/pi";
 import { IoRepeat } from "react-icons/io5";
 import { MdOutlineWbSunny } from "react-icons/md";
 import { CiLocationOn } from "react-icons/ci";
-import ProductQuantityBtn from "../components/ProductQuantityBtn";
+import ProductQuantityBtn from "./components/ProductQuantityBtn";
 
 const url = process.env.NEXTAUTH_URL;
 // const url = "http://localhost:3000";

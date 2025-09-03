@@ -1,7 +1,6 @@
 "use client";
 
 import { useSession } from "next-auth/react";
-// import { headers } from "next/headers";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
@@ -13,6 +12,7 @@ const ProductQuantityBtn = ({ id, product }) => {
     const session = useSession();
     const router = useRouter();
     const [newQuantity, setNewQuantity] = useState(1);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         setNewQuantity(1);
@@ -39,6 +39,7 @@ const ProductQuantityBtn = ({ id, product }) => {
         }
         else {
             try {
+                setLoading(true);
                 const email = session?.data?.user?.email;
                 const item = {
                     _id: product._id,
@@ -60,16 +61,20 @@ const ProductQuantityBtn = ({ id, product }) => {
 
                 if (cartRes.ok) {
                     const resData = await cartRes.json();
-                    console.log(resData);
+                    // console.log(resData);
                     toast.success("Item Added Successfully!", { position: "top-center" });
+                    router.refresh();
+                    setLoading(false);
                 }
                 else {
                     console.log(cartRes.status, cartRes.statusText);
+                    setLoading(false);
                     // toast.success("Item Added Successfully!", { position: "top-center" });
                 }
             }
             catch (error) {
                 console.log(error)
+                setLoading(false);
             }
         }
     };
@@ -77,6 +82,11 @@ const ProductQuantityBtn = ({ id, product }) => {
 
     return (
         <>
+            {loading &&
+                <div className="fixed inset-0 z-50 bg-black opacity-40 flex items-center justify-center">
+                    <div className="w-12 h-12 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
+                </div>
+            }
             <div className='border-2 border-gray-300 rounded-md flex justify-between items-center'>
                 <button className="px-4 py-4 border-r-2 border-gray-300 cursor-pointer"
                     onClick={handleQuantityMinus}

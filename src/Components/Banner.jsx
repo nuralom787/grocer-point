@@ -14,7 +14,9 @@ const Banner = () => {
     const [coupons, setCoupons] = useState([]);
 
     useEffect(() => {
-        fetch(`${url}/api/coupons`)
+        fetch(`${url}/api/coupons`, {
+            cache: "force-cache"
+        })
             .then(res => res.json())
             .then(data => setCoupons(data))
     }, []);
