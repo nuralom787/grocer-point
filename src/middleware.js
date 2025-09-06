@@ -9,7 +9,6 @@ const middleware = async (req) => {
         secureCookie: process.env.NODE_ENV === "production" ? true : false
     });
 
-    // console.log("From Token: ", token);
     if (token) {
         return NextResponse.next();
     }
