@@ -36,33 +36,34 @@ export const authOptions = {
     pages: {
         signIn: "/user/login"
     },
-    // callbacks: {
-    //     async signIn({ user, account, profile, email, credentials }) {
-    //         if (account) {
-    //             try {
-    //                 const { provider, providerAccountId } = account;
-    //                 const { email: user_email, image, name } = user;
-    //                 const payload = { role: "user", provider, providerAccountId, email, image, name };
-    //                 // console.log(payload);
+    callbacks: {
+        async signIn({ user, account, profile, email, credentials }) {
+            console.log({ user, account, profile, email, credentials });
+            // if (account) {
+            //     try {
+            //         const { provider, providerAccountId } = account;
+            //         const { email: user_email, image, name } = user;
+            //         const payload = { role: "user", provider, providerAccountId, email, image, name };
+            //         // console.log(payload);
 
-    //                 const customersCollection = dbConnect(collectionsNames.customersCollection);
-    //                 const isUserExist = await customersCollection.findOne({
-    //                     $or: [
-    //                         { providerAccountId: providerAccountId },
-    //                         { email: user_email }
-    //                     ]
-    //                 });
-    //                 if (!isUserExist) {
-    //                     await customersCollection.insertOne(payload)
-    //                 }
-    //             } catch (error) {
-    //                 console.log(error);
-    //                 return false
-    //             }
-    //         }
-    //         return true
-    //     }
-    // }
+            //         const customersCollection = dbConnect(collectionsNames.customersCollection);
+            //         const isUserExist = await customersCollection.findOne({
+            //             $or: [
+            //                 { providerAccountId: providerAccountId },
+            //                 { email: user_email }
+            //             ]
+            //         });
+            //         if (!isUserExist) {
+            //             await customersCollection.insertOne(payload)
+            //         }
+            //     } catch (error) {
+            //         console.log(error);
+            //         return false
+            //     }
+            // }
+            return true
+        }
+    }
 };
 
 const handler = NextAuth(authOptions)

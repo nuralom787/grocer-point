@@ -1,6 +1,6 @@
 "use server";
 import dbConnect, { collectionsNames } from "@/lib/dbConnect";
-import bcrypt from "bcrypt";
+// import bcrypt from "bcrypt";
 
 
 const LoginUser = async (payload) => {
@@ -12,7 +12,7 @@ const LoginUser = async (payload) => {
         // const isPasswordOk = await bcrypt.compare(password, user.password);
 
         if (user) {
-            // user._id = user._id.toString();
+            user._id = user._id.toString();
             const userData = {
                 _id: user._id.toString(),
                 displayName: user.displayName,

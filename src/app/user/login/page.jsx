@@ -85,7 +85,7 @@ const LoginPage = () => {
                 </div>
                 <br />
                 <div className="text-center">
-                    <span className="text-sm font-semibold">New Hare? Please <Link className="hover:underline text-green-900" href={"/register"}>Register</Link></span>
+                    <span className="text-sm font-semibold">New Hare? Please <Link className="hover:underline text-green-900" href={"/user/register"}>Register</Link></span>
                 </div>
                 <div className="divider before:bg-black after:bg-black">OR</div>
                 <SocialsAuth />

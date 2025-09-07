@@ -14,40 +14,42 @@ const RegistrationPage = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        // setLoading(true);
+        setLoading(true);
 
         const form = e.target;
         const name = form.name.value;
         const email = form.email.value;
         const password = form.password.value;
         const payload = { name, email, password };
-        console.log(payload);
+        // console.log(payload);
 
-        // try {
-        //     const res = await RegisterUser(payload);
-        //     if (res.insertedId) {
-        //         toast.success("User Created Successfully.", {
-        //             position: "top-center",
-        //             autoClose: 3500
-        //         });
-        //         router.push("/login");
-        //         form.reset();
-        //         setLoading(false);
-        //     } else {
-        //         toast.error(res.message, {
-        //             position: "top-center",
-        //             autoClose: 3500
-        //         });
-        //         setLoading(false);
-        //     }
-        // } catch (error) {
-        //     form.reset();
-        //     toast.error(error, {
-        //         position: "top-center",
-        //         autoClose: 3500
-        //     });
-        //     setLoading(false);
-        // }
+        try {
+            const res = await RegisterUser(payload);
+            if (res.insertedId) {
+                toast.success("User Created Successfully. Please Login.", {
+                    position: "top-center",
+                    autoClose: 3500
+                });
+                router.push("/user/login");
+                form.reset();
+                setLoading(false);
+            }
+            else {
+                toast.error(res.message, {
+                    position: "top-center",
+                    autoClose: 3500
+                });
+                setLoading(false);
+            }
+        }
+        catch (error) {
+            form.reset();
+            toast.error(error, {
+                position: "top-center",
+                autoClose: 3500
+            });
+            setLoading(false);
+        }
     };
 
 

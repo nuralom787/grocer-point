@@ -18,12 +18,11 @@ const Header = async () => {
     let cart = {};
 
     if (session) {
-        // console.log("From header: ", session)
         const cartRes = await fetch(`${url}/api/cart/${session?.user?.email}`);
-        cart = await cartRes.json();
+        if (cartRes.ok) {
+            cart = await cartRes.json();
+        }
     };
-
-
 
     return (
         <div className='header sticky top-0 z-20'>
