@@ -33,11 +33,11 @@ const UserProfile = async () => {
                                 </div>
                                 <div className='m-3 space-y-1.5'>
                                     <span className='text-xs'>Mobile</span>
-                                    {account?.phoneNumber ? <p className='font-semibold text-sm leading-8'>{account.phoneNumber}</p> : <p className='font-medium text-sm text-[#9e9e9e] leading-10'>Please enter your mobile</p>}
+                                    {account?.phoneNumber ? <p className='font-semibold text-sm leading-8'>{account?.phoneNumber}</p> : <p className='font-medium text-sm text-[#9e9e9e] leading-10'>Please enter your mobile</p>}
                                 </div>
                                 <div className='m-3 space-y-1.5'>
                                     <span className='text-xs'>Birthday</span>
-                                    {account?.dob ? <p className='font-semibold text-sm leading-8'>{new Date(account.dob).toLocaleDateString("en-BD", {
+                                    {account?.dob ? <p className='font-semibold text-sm leading-8'>{new Date(account?.dob).toLocaleDateString("en-BD", {
                                         day: "2-digit",
                                         month: "short",
                                         year: "numeric",
@@ -45,7 +45,7 @@ const UserProfile = async () => {
                                 </div>
                                 <div className='m-3 space-y-1.5'>
                                     <span className='text-xs'>Gender</span>
-                                    {account?.gender ? <p className='font-semibold text-sm leading-8'>{account.gender}</p> : <p className='font-medium text-sm text-[#9e9e9e] leading-10'>Please enter your gender</p>}
+                                    {account?.gender ? <p className='font-semibold text-sm leading-8'>{account?.gender}</p> : <p className='font-medium text-sm text-[#9e9e9e] leading-10'>Please enter your gender</p>}
                                 </div>
                             </div>
                             <div className='py-4 mx-4'>

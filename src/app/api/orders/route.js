@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 export const GET = async (req) => {
     const { searchParams } = new URL(req.url);
     const email = searchParams.get("email");
-    console.log(email);
+    // console.log(email);
     const ordersCollection = dbConnect(collectionsNames.ordersCollection);
     let orders = [];
     if (email) {

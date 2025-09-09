@@ -1,12 +1,12 @@
 "use client";
 
-import { useForm } from "react-hook-form";
 import { BsCloudArrowUp } from "react-icons/bs";
 import Swal from "sweetalert2";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import NavigationPanel from "../../components/NavigationPanel";
+import { useForm } from "react-hook-form";
 const url = "https://grocerpoint.vercel.app";
 // const url = "http://localhost:3000";
 
@@ -15,7 +15,7 @@ const UserProfileUpdate = () => {
     const router = useRouter();
     const [account, setAccount] = useState({});
     const [loading, setLoading] = useState(false);
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const { register, handleSubmit } = useForm();
 
     useEffect(() => {
         fetch(`${url}/api/myAccount?email=${session?.data?.user?.email}`, { cache: "force-cache" })
@@ -27,44 +27,56 @@ const UserProfileUpdate = () => {
 
 
     const onSubmit = (data) => {
-        console.log("sdsgdgs");
-        data.dob = new Date(data.dob).toISOString();
+        data.displayName = data.displayName ? data.displayName : account.displayName;
+        data.email = data.email ? data.email : account.email;
+        data.phoneNumber = data.phoneNumber ? data.phoneNumber : account.phoneNumber;
+        data.dob = data.dob ? new Date(data.dob) : new Date(account.dob);
+        data.gender = data.gender ? data.gender : account.gender;
+        // console.log(data);
 
-        // Swal.fire({
-        //     title: "Are you sure?",
-        //     text: "You want to update your profile information?",
-        //     icon: "question",
-        //     showCancelButton: true,
-        //     confirmButtonColor: "#3085d6",
-        //     cancelButtonColor: "#d33",
-        //     confirmButtonText: "Update"
-        // }).then((result) => {
-        // if (result.isConfirmed) {
-        //     try {
-        //         setLoading(true);
-        //         axiosSecure.put(`/customer/update/profile?email=${account.email}`, data)
-        //             .then(res => {
-        //                 // console.log(res.data);
-        //                 if (res.data.modifiedCount > 0) {
-        //                     Swal.fire({
-        //                         title: "Updated!",
-        //                         text: "Your profile has been updated Successfully.",
-        //                         icon: "success"
-        //                     });
-        //                     router.push("/user/profile")
-        //                     setLoading(false);
-        //                 }
-        //             })
-        //             .catch(err => {
-        //                 setLoading(false);
-        //                 // console.log(err);
-        //             })
-        //     }
-        //     catch (error) {
-        //         console.log(error);
-        //     }
-        // }
-        // });
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You want to update your profile information?",
+            icon: "question",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Update"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                try {
+                    setLoading(true);
+                    fetch(`${url}/api/myAccount?email=${account.email}`, {
+                        method: "PATCH",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify(data)
+                    })
+                        .then(res => res.json())
+                        .then(data => {
+                            console.log(data);
+                            if (data.modifiedCount > 0) {
+                                Swal.fire({
+                                    title: "Updated!",
+                                    text: "Your profile has been updated Successfully.",
+                                    icon: "success"
+                                });
+                                router.push("/user/profile");
+                                router.refresh();
+                                setLoading(false);
+                            }
+                        })
+                        .catch(err => {
+                            setLoading(false);
+                            console.log(err);
+                        })
+                }
+                catch (error) {
+                    console.log(error);
+                }
+            }
+        });
     };
 
 
@@ -90,7 +102,7 @@ const UserProfileUpdate = () => {
                                     <div className='m-3 space-y-1.5'>
                                         <p className='text-xs'>Full Name</p>
                                         <input
-                                            {...register("displayName", { required: true })}
+                                            {...register("displayName")}
                                             className="w-full border border-gray-600 px-5 py-1 outline-0 font-semibold text-sm leading-7"
                                             defaultValue={account?.displayName}
                                             placeholder="Please Enter Your Full-Name"
@@ -100,7 +112,7 @@ const UserProfileUpdate = () => {
                                     <div className='m-3 space-y-1.5'>
                                         <p className='text-xs'>Email Address</p>
                                         <input
-                                            {...register("email", { required: true })}
+                                            {...register("email")}
                                             className="w-full border border-gray-600 px-5 py-1 outline-0 font-semibold text-sm leading-7 cursor-not-allowed text-gray-500"
                                             defaultValue={account?.email && account?.email?.split('@')[0].slice(0, 2) + '*'.repeat(account?.email?.split('@')[0].length - 2) + '@' + account?.email?.split('@')[1]}
                                             // defaultValue={account?.email}
@@ -111,7 +123,7 @@ const UserProfileUpdate = () => {
                                     <div className='m-3 space-y-1.5'>
                                         <p className='text-xs'>Mobile</p>
                                         <input
-                                            {...register("phoneNumber", { required: true })}
+                                            {...register("phoneNumber")}
                                             className="w-full border border-gray-600 px-5 py-1 outline-0 font-semibold text-sm leading-7"
                                             defaultValue={account?.phoneNumber}
                                             placeholder="Please Enter Your Phone Number"
@@ -121,7 +133,7 @@ const UserProfileUpdate = () => {
                                     <div className='m-3 space-y-1.5'>
                                         <p className='text-xs'>Birthday</p>
                                         <input
-                                            {...register("dob", { required: true })}
+                                            {...register("dob")}
                                             className="w-full border border-gray-600 px-5 py-1 outline-0 font-semibold text-sm leading-7 cursor-pointer"
                                             defaultValue={account?.dob && new Date(account?.dob).toISOString().split("T")[0]}
                                             placeholder="Please Enter Your Date-of-birth"
@@ -131,13 +143,13 @@ const UserProfileUpdate = () => {
                                     <div className='m-3 space-y-1.5'>
                                         <p className='text-xs'>Gender</p>
                                         <select
-                                            {...register("gender", { required: true })}
+                                            {...register("gender")}
                                             className="w-full border border-gray-600 px-5 py-2 outline-0 font-semibold text-sm cursor-pointer"
                                         >
                                             {account?.gender && <option value={account?.gender}>{account?.gender}</option>}
-                                            {account?.gender !== "male" && <option value="male">Male</option>}
-                                            {account?.gender !== "female" && <option value="female">Female</option>}
-                                            {account?.gender !== "others" && <option value="others">Others</option>}
+                                            <option value="Male" hidden={account?.gender === "Male" ? true : false}>Male</option>
+                                            <option value="Female" hidden={account?.gender === "Female" ? true : false}>Female</option>
+                                            <option value="Others" hidden={account?.gender === "Others" ? true : false}>Others</option>
                                         </select>
                                     </div>
                                 </div>
