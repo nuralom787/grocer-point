@@ -10,6 +10,9 @@ export const collectionsNames = {
     customersCollection: "customers",
     cartsCollection: "carts",
     ordersCollection: "orders",
+    regionCollection: "region",
+    cityCollection: "city",
+    zoneCollection: "zone",
 }
 
 const dbConnect = (collectionName) => {
