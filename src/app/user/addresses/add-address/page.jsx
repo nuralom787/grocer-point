@@ -3,11 +3,15 @@
 import { Controller, useForm } from "react-hook-form";
 import NavigationPanel from "../../components/NavigationPanel";
 import { useRouter } from "next/navigation";
-import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
-const url = "http://localhost:3000";
+import { useSession } from "next-auth/react";
+import Swal from "sweetalert2";
+
+const url = "https://grocerpoint.vercel.app";
+// const url = "http://localhost:3000";
 
 const AddAddress = () => {
+    const session = useSession();
     const { register, handleSubmit, control, formState: { errors }, setError, resetField } = useForm();
     const router = useRouter();
     const [loading, setLoading] = useState(false);
@@ -21,13 +25,13 @@ const AddAddress = () => {
 
 
     useEffect(() => {
-        fetch(`${url}/api/location?query=region`)
+        fetch(`${url}/api/location?query=region`, { cache: "force-cache" })
             .then(res => res.json())
             .then(data => {
                 setRegions(data.result);
             })
             .catch(err => {
-                // console.log(err);
+                console.log(err);
             })
     }, []);
 
@@ -38,15 +42,15 @@ const AddAddress = () => {
         setZones([]);
         setZone("");
         setRegion(e.target.options[e.target.selectedIndex].text);
-        fetch(`${url}/api/location?query=city`)
+        fetch(`${url}/api/location?query=city&addressId=${e.target.value}`, { cache: "force-cache" })
             .then(res => res.json())
             .then(data => {
-                setRegions(data.result);
+                setCites(data.result);
                 setLoading(false);
             })
             .catch(err => {
                 setLoading(false);
-                // console.log(err);
+                console.log(err);
             })
     };
 
@@ -56,51 +60,73 @@ const AddAddress = () => {
         setZone("");
         resetField("address", { keepError: true })
         setCity(e.target.options[e.target.selectedIndex].text);
-        fetch(`${url}/api/location?query=zone`)
+        fetch(`${url}/api/location?query=zone&addressId=${e.target.value}`, { cache: "force-cache" })
             .then(res => res.json())
             .then(data => {
-                setRegions(data.result);
+                setZones(data.result);
                 setLoading(false);
             })
             .catch(err => {
                 setLoading(false);
-                // console.log(err);
+                console.log(err);
             })
     };
 
 
     const onSubmit = (data) => {
-        //     if (!city) {
-        //         return (
-        //             setError("city"),
-        //             setError("zone")
-        //         )
-        //     }
-        //     if (!zone) {
-        //         return setError("zone")
-        //     }
-        //     if (!data.address) {
-        //         return setError("address")
-        //     }
-        //     data.region = region
-        //     data.city = city
-        //     // console.log(data);
-        //     setLoading(true);
+        if (!city) {
+            return (
+                setError("city"),
+                setError("zone")
+            )
+        }
+        if (!zone) {
+            return setError("zone")
+        }
+        if (!data.address) {
+            return setError("address")
+        }
+        data.region = region
+        data.city = city
+        // console.log(data);
 
-        //     // Store Data in Database.
-        //     // axiosSecure.put(`/customer/add/address?user=${user.email}`, data)
-        //     //     .then(res => {
-        //     //         // console.log(res.data);
-        //     //         if (res.data.modifiedCount > 0) {
-        //     //             setLoading(false);
-        //     //             toast.success("Address Added Successfully!");
-        //     //             router.push("/user/addresses")
-        //     //         }
-        //     //     })
-        //     //     .catch(err => {
-        //     //         setLoading(false);
-        //     //         // console.log(err);
-        //     //     });
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You want to add this address in your profile?",
+            icon: "question",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, Add"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                setLoading(true);
+
+                // Store Data in Database.
+                fetch(`${url}/api/location?email=${session?.data?.user?.email}&query=add-address`, {
+                    method: "PATCH",
+                    body: JSON.stringify(data)
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        // console.log(data);
+                        if (data.result.modifiedCount > 0) {
+                            setLoading(false);
+                            Swal.fire({
+                                title: "Added!",
+                                text: "Address Added Successfully.",
+                                icon: "success"
+                            });
+                            router.push("/user/addresses")
+                            router.refresh();
+                        }
+                    })
+                    .catch(err => {
+                        setLoading(false);
+                        console.log(err);
+                    });
+            }
+        });
     };
 
 
