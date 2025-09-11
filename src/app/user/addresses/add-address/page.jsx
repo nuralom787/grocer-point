@@ -138,7 +138,7 @@ const AddAddress = () => {
                     {/* Navigation Panel */}
                     <NavigationPanel />
 
-                    {/* Account Info */}
+                    {/* Address Info */}
                     <div className="w-full lg:w-3/4 rounded">
                         <section className="bg-white p-4 rounded font-inter">
                             <h3 className="font-semibold text-[#151515] text-lg">Add New Address</h3>
