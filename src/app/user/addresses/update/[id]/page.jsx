@@ -2,26 +2,29 @@
 
 import NavigationPanel from "@/app/user/components/NavigationPanel";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 
-// const url = "https://grocerpoint.vercel.app";
-const url = "http://localhost:3000";
+const url = "https://grocerpoint.vercel.app";
+// const url = "http://localhost:3000";
 
-const UpdateAddress = ({ params }) => {
+const UpdateAddress = () => {
+    const { id } = useParams();
+    const router = useRouter();
     const session = useSession();
-    const id = params;
-    let currentAddress;
-    const { register, handleSubmit, control, formState: { errors }, setError, resetField } = useForm({
+    const [currentAddress, setCurrentAddress] = useState({});
+    const { register, handleSubmit, control, formState: { errors }, setError, resetField, reset } = useForm({
         defaultValues: {
-            region: currentAddress?.region,
-            city: currentAddress?.city,
+            fullName: "",
+            phoneNumber: "",
+            region: "",
+            city: "",
+            zone: "",
+            address: "",
         }
     });
-
-    const router = useRouter();
     const [loading, setLoading] = useState(false);
     const [regions, setRegions] = useState([]);
     const [region, setRegion] = useState("");
@@ -30,32 +33,46 @@ const UpdateAddress = ({ params }) => {
     const [zones, setZones] = useState([]);
     const [zone, setZone] = useState("");
 
+    // reset default values of input fields.
+    useEffect(() => {
+        if (currentAddress?._id) {
+            reset({
+                fullName: currentAddress.fullName || "",
+                phoneNumber: currentAddress.phoneNumber || "",
+                region: currentAddress.region || "",
+                city: currentAddress.city || "",
+                zone: currentAddress.zone || "",
+                address: currentAddress.address || "",
+            });
+        }
+    }, [currentAddress, reset]);
+
+
     // Load User Profile for current Address.
     useEffect(() => {
         fetch(`${url}/api/myAccount?email=${session?.data?.user?.email}`)
             .then(res => res.json())
             .then(data => {
-                const newAddress = data?.addresses?.find(address => address._id === id);
-                console.log(newAddress);
+                const newAddress = data.addresses.find(address => address._id === id);
+                setCurrentAddress(newAddress);
             })
             .catch(err => {
                 console.log(err);
             })
     }, [id]);
 
-    // Load Region Information.
+
     useEffect(() => {
-        // axiosPublic.get("/api/region")
-        //     .then(res => {
-        //         // console.log(res.data);
-        //         setRegions(res.data);
-        //     })
-        //     .catch(err => {
-        //         // console.log(err);
-        //     })
+        fetch(`${url}/api/location?query=region`, { cache: "force-cache" })
+            .then(res => res.json())
+            .then(data => {
+                setRegions(data.result);
+            })
+            .catch(err => {
+                console.log(err);
+            })
     }, []);
 
-    // Load City Information.
     const handleCityAddress = (e) => {
         setLoading(true);
         setCites([]);
@@ -63,36 +80,36 @@ const UpdateAddress = ({ params }) => {
         setZones([]);
         setZone("");
         setRegion(e.target.options[e.target.selectedIndex].text);
-        // axiosPublic.get(`/api/city?addressId=${e.target.value}`)
-        //     .then(res => {
-        //         // console.log(res.data);
-        //         setCites(res.data);
-        //         setLoading(false);
-        //     })
-        //     .catch(err => {
-        //         setLoading(false);
-        //         // console.log(err);
-        //     })
+        fetch(`${url}/api/location?query=city&addressId=${e.target.value}`, { cache: "force-cache" })
+            .then(res => res.json())
+            .then(data => {
+                setCites(data.result);
+                setLoading(false);
+            })
+            .catch(err => {
+                setLoading(false);
+                console.log(err);
+            })
     };
 
-    // Load Zone Information.
     const handleZoneAddress = (e) => {
         setLoading(true);
         setZones([]);
         setZone("");
         resetField("address", { keepError: true })
         setCity(e.target.options[e.target.selectedIndex].text);
-        // axiosPublic.get(`/api/zone?addressId=${e.target.value}`)
-        //     .then(res => {
-        //         // console.log(res.data);
-        //         setZones(res.data);
-        //         setLoading(false);
-        //     })
-        //     .catch(err => {
-        //         setLoading(false);
-        //         // console.log(err);
-        //     })
+        fetch(`${url}/api/location?query=zone&addressId=${e.target.value}`, { cache: "force-cache" })
+            .then(res => res.json())
+            .then(data => {
+                setZones(data.result);
+                setLoading(false);
+            })
+            .catch(err => {
+                setLoading(false);
+                console.log(err);
+            })
     };
+
 
     // Update Information Function.
     const onSubmit = (data) => {
@@ -105,6 +122,7 @@ const UpdateAddress = ({ params }) => {
         data.region = region ? region : currentAddress.region
         data.city = city ? city : currentAddress.city
         data.zone = zone ? zone : currentAddress.zone
+        data._id = currentAddress._id
         // console.log(data);
 
         Swal.fire({
@@ -120,22 +138,32 @@ const UpdateAddress = ({ params }) => {
                 setLoading(true);
 
                 // Update Address Data in Database.
-                // axiosSecure.put(`/customer/update/address?user=${user.email}&addressId=${currentAddress._id}`, data)
-                //     .then(res => {
-                //         // console.log(res.data);
-                //         if (res.data.modifiedCount > 0) {
-                //             setLoading(false);
-                //             toast.success("Address Updated Successfully!");
-                //             router.push("/user/addresses")
-                //         }
-                //     })
-                //     .catch(err => {
-                //         setLoading(false);
-                //         // console.log(err);
-                //     });
+                fetch(`${url}/api/location?email=${session?.data?.user?.email}&query=update-address`, {
+                    method: "PATCH",
+                    body: JSON.stringify(data)
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        console.log(data);
+                        if (data.result.acknowledged || data.result.modifiedCount > 0) {
+                            setLoading(false);
+                            Swal.fire({
+                                title: "Updated!",
+                                text: "Address Updated Successfully!",
+                                icon: "success"
+                            });
+                            router.push("/user/addresses");
+                            router.refresh();
+                        }
+                    })
+                    .catch(err => {
+                        setLoading(false);
+                        console.log(err);
+                    });
             }
         });
     };
+
 
     // Delete Address Function.
     const handleDeleteAddress = () => {
@@ -152,19 +180,28 @@ const UpdateAddress = ({ params }) => {
                 setLoading(true);
 
                 // Update Address Data in Database.
-                // axiosSecure.delete(`/customer/delete/address?user=${user.email}&addressId=${currentAddress._id}`)
-                //     .then(res => {
-                //         // console.log(res.data);
-                //         if (res.data.modifiedCount > 0) {
-                //             setLoading(false);
-                //             toast.success("Address Deleted Successfully!");
-                //             router.push("/user/addresses")
-                //         }
-                //     })
-                //     .catch(err => {
-                //         setLoading(false);
-                //         // console.log(err);
-                //     });
+                fetch(`${url}/api/location?email=${session?.data?.user?.email}&query=delete-address`, {
+                    method: "PATCH",
+                    body: JSON.stringify({ addressId: currentAddress._id })
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        console.log(data);
+                        if (data.result.modifiedCount > 0) {
+                            setLoading(false);
+                            Swal.fire({
+                                title: "Deleted!",
+                                text: "Address Deleted Successfully!",
+                                icon: "success"
+                            });
+                            router.push("/user/addresses");
+                            router.refresh();
+                        }
+                    })
+                    .catch(err => {
+                        setLoading(false);
+                        console.log(err);
+                    });
             }
         });
     };
@@ -183,7 +220,7 @@ const UpdateAddress = ({ params }) => {
                             <div className="flex justify-between items-center gap-5 lg:px-6">
                                 <h3 className="font-semibold text-[#151515] text-lg">Edit Address</h3>
                                 <button
-                                    className="bg-cyan-600 hover:bg-cyan-700 duration-300 px-4 py-1.5 rounded text-xs font-semibold text-white cursor-pointer"
+                                    className="bg-cyan-600 hover:bg-cyan-800 duration-300 px-5 py-2.5 rounded text-xs font-semibold text-white cursor-pointer"
                                     onClick={handleDeleteAddress}>
                                     Delete
                                 </button>
@@ -201,7 +238,6 @@ const UpdateAddress = ({ params }) => {
                                             <p className={`text-xs font-medium text-gray-600 my-1.5 ${errors.fullName && "text-red-500"}`}>Full Name</p>
                                             <input
                                                 {...register("fullName", { required: true })}
-                                                defaultValue={currentAddress?.fullName}
                                                 className={`px-6 py-2 outline-0 border border-gray-400 w-full text-sm ${errors.fullName && "border-red-500"}`}
                                                 placeholder="Enter your Full-name"
                                                 type="text"
@@ -212,7 +248,6 @@ const UpdateAddress = ({ params }) => {
                                             <p className={`text-xs font-medium text-gray-600 my-1.5 ${errors.phoneNumber && "text-red-500"}`}>Phone Number</p>
                                             <input
                                                 {...register("phoneNumber", { required: true })}
-                                                defaultValue={currentAddress?.phoneNumber}
                                                 className={`px-6 py-2 outline-0 border border-gray-400 w-full text-sm ${errors.phoneNumber && "border-red-500"}`}
                                                 placeholder="Please enter your phone number"
                                                 type="number"
@@ -338,7 +373,6 @@ const UpdateAddress = ({ params }) => {
                                             <p className={`text-xs font-medium text-gray-600 my-1.5 ${errors.address && "text-red-500"}`}>Address</p>
                                             <input
                                                 {...register("address", { required: true })}
-                                                defaultValue={currentAddress?.address}
                                                 className={`px-6 py-2 outline-0 border border-gray-400 w-full text-sm ${errors.address && "border-red-500"}`}
                                                 placeholder="Please Enter your Address Details"
                                                 type="text"
@@ -349,12 +383,12 @@ const UpdateAddress = ({ params }) => {
                                     <div className="text-end px-0 lg:px-12 py-6 space-y-4 lg:space-x-4 font-inter">
                                         <button
                                             onClick={() => window.history.back()}
-                                            className="w-full lg:w-fit px-8 py-3 bg-gray-300 rounded border border-gray-400 text-gray-600 cursor-pointer text-sm font-semibold"
+                                            className="w-full lg:w-fit px-8 py-3 duration-300 bg-gray-400 hover:bg-gray-300 rounded border border-gray-400 text-gray-800 cursor-pointer text-sm font-semibold"
                                             type="button">
                                             Cancel
                                         </button>
                                         <button
-                                            className="w-full lg:w-fit px-8 py-3 bg-orange-400 rounded border border-orange-400 text-white cursor-pointer text-sm font-semibold"
+                                            className="w-full lg:w-fit px-8 py-3 duration-300 bg-orange-400 hover:bg-orange-600 rounded border border-orange-400 text-white cursor-pointer text-sm font-semibold"
                                             type="submit">
                                             Save
                                         </button>

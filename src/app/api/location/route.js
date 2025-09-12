@@ -40,36 +40,43 @@ export const PATCH = async (req) => {
     const { searchParams } = new URL(req.url);
     const email = searchParams.get("email");
     const query = searchParams.get("query");
-    body._id = new ObjectId();
 
     let result;
 
     switch (query) {
         case "add-address":
+            body._id = new ObjectId();
             result = await customersCollection.updateOne({ email }, { $push: { addresses: body } });
             if (result.modifiedCount > 0) {
                 revalidatePath("/user/addresses");
             }
             break;
 
-        // case "update-address":
-        //     const id = req.query.addressId;
-        //     const query = { email: email, "addresses._id": new ObjectId(id) };
-        //     const updateDoc = {
-        //         $set: {
-        //             "addresses.$.fullName": newAddress.fullName,
-        //             "addresses.$.phoneNumber": newAddress.phoneNumber,
-        //             "addresses.$.address": newAddress.address,
-        //             "addresses.$.region": newAddress.region,
-        //             "addresses.$.city": newAddress.city,
-        //             "addresses.$.zone": newAddress.zone
-        //         }
-        //     };
-        //     result = await customersCollection.updateOne({ email }, { $push: { addresses: body } });
-        //     if (result.modifiedCount > 0) {
-        //         revalidatePath("/user/addresses");
-        //     }
-        //     break;
+        case "update-address":
+            const query = { email: email, "addresses._id": new ObjectId(body._id) };
+            const updateDoc = {
+                $set: {
+                    "addresses.$.fullName": body.fullName,
+                    "addresses.$.phoneNumber": body.phoneNumber,
+                    "addresses.$.region": body.region,
+                    "addresses.$.city": body.city,
+                    "addresses.$.zone": body.zone,
+                    "addresses.$.address": body.address
+                }
+            };
+
+            result = await customersCollection.updateOne(query, updateDoc);
+            if (result.modifiedCount > 0) {
+                revalidatePath("/user/addresses");
+            }
+            break;
+
+        case "delete-address":
+            result = await customersCollection.updateOne({ email }, { $pull: { addresses: { _id: new ObjectId(body.addressId) } } });
+            if (result.modifiedCount > 0) {
+                revalidatePath("/user/addresses");
+            }
+            break;
 
         default: return NextResponse.json({ error: "Invalid action" }, { status: 400 });
     }
