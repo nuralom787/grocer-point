@@ -50,12 +50,10 @@ const ProductQuantityBtn = ({ id, product }) => {
                     discount: product.discount,
                     quantity: newQuantity
                 };
-                const data = { email, item };
+                const action = "add-item";
+                const data = { email, item, action };
                 const cartRes = await fetch(`${localUrl}/api/cart`, {
                     method: "PATCH",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
                     body: JSON.stringify(data)
                 });
 

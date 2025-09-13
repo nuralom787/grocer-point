@@ -1,44 +1,57 @@
 "use client";
 
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
+const url = "https://grocerpoint.vercel.app";
+// const url = "http://localhost:3000";
 
 const CartItemQuantityBtn = ({ product }) => {
+    const router = useRouter()
     const session = useSession();
     const [loading, setLoading] = useState(false);
 
     // Handle Product Quantity.
     const handleQuantity = (e, id) => {
         const email = session?.data?.user?.email;
-        const data = { email, id };
+        const data = { email, item: id };
+        data.action = "update-quantity";
 
         if (e === "-1") {
             setLoading(true);
-            console.log(e, data);
-            // axiosSecure.patch('/carts/quantity?quantity=-1', data)
-            //     .then(res => {
-            //         // console.log(res.data);
-            //         refetch()
-            //         setLoading(false);
-            //     })
-            //     .catch(err => {
-            //         // console.log(err.message);
-            setLoading(false);
-            //     })
+            // console.log(e, data);
+            fetch(`${url}/api/cart?quantity=-1`, {
+                method: "PATCH",
+                body: JSON.stringify(data)
+            })
+                .then(res => res.json())
+                .then(data => {
+                    console.log(data);
+                    router.refresh()
+                    setLoading(false);
+                })
+                .catch(err => {
+                    console.log(err);
+                    setLoading(false);
+                })
         }
         else {
             setLoading(true);
-            console.log(e, data);
-            // axiosSecure.patch('/carts/quantity?quantity=+1', data)
-            //     .then(res => {
-            //         // console.log(res.data);
-            //         refetch()
-            //         setLoading(false);
-            //     })
-            //     .catch(err => {
-            //         // console.log(err.message);
-            setLoading(false);
-            //     })
+            // console.log(e, data);
+            fetch(`${url}/api/cart?quantity=+1`, {
+                method: "PATCH",
+                body: JSON.stringify(data)
+            })
+                .then(res => res.json())
+                .then(data => {
+                    console.log(data);
+                    router.refresh();
+                    setLoading(false);
+                })
+                .catch(err => {
+                    console.log(err);
+                    setLoading(false);
+                })
         }
     };
 
