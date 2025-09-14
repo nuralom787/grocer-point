@@ -89,8 +89,8 @@ const Cart = async () => {
                         </div>
                     </div>
                     {cart?.cartDiscount && cart?.appliedCoupon ?
-                        <div className="bg-green-100 py-3 px-6 mt-5 mb-1.5 font-inter flex justify-between items-center">
-                            <h2 className="text-sm text-green-600 font-bold">Coupon Applied</h2>
+                        <div className="bg-green-100 py-3 px-6 mt-5 mb-1.5 font-inter flex justify-between items-center rounded">
+                            <h2 className="text-sm text-green-700 font-bold">Coupon Applied</h2>
                             <span className="text-sm text-red-500 font-bold uppercase">{cart?.appliedCoupon}</span>
                         </div>
                         :

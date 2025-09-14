@@ -1,14 +1,15 @@
 import dbConnect, { collectionsNames } from "@/lib/dbConnect";
 import { revalidatePath } from "next/cache";
 import { NextResponse } from "next/server";
-const collections = dbConnect(collectionsNames.cartsCollection);
+const cartsCollection = dbConnect(collectionsNames.cartsCollection);
+const couponsCollection = dbConnect(collectionsNames.couponsCollection);
 
 export const PATCH = async (req) => {
     const { searchParams } = new URL(req.url);
     const quantity = searchParams.get("quantity");
     const body = await req.json();
-    const { email, item, action } = body;
-    const user = await collections.findOne({ email });
+    const { email, item, subtotal, couponCode, action } = body;
+    const user = await cartsCollection.findOne({ email });
 
 
     let result;
@@ -29,7 +30,7 @@ export const PATCH = async (req) => {
                     updatedAt: new Date()
                 };
 
-                result = await collections.insertOne(data);
+                result = await cartsCollection.insertOne(data);
             }
             else {
                 const existingProductIndex = user.cart.findIndex(p => p._id === item._id);
@@ -58,7 +59,7 @@ export const PATCH = async (req) => {
                         updatedAt: new Date()
                     }
                 };
-                result = await collections.updateOne(filter, updateDoc);
+                result = await cartsCollection.updateOne(filter, updateDoc);
             }
             break;
 
@@ -90,18 +91,48 @@ export const PATCH = async (req) => {
                     updatedAt: new Date()
                 }
             };
-            result = await collections.updateOne(filter, updateDoc);
+            result = await cartsCollection.updateOne(filter, updateDoc);
             if (result.acknowledged) {
                 revalidatePath("/user/cart");
             }
             break;
 
-        // case "applyCoupon":
-        //     result = await collection.updateOne(
-        //         { email },
-        //         { $set: { appliedCoupon: body.coupon } }
-        //     );
-        //     break;
+        case "apply-coupon":
+            // console.log("From API: ", body);
+            // Find the coupon in our simulated database
+            const foundCoupon = await couponsCollection.findOne({ couponCode: couponCode.toUpperCase() });
+
+            // If no coupon is found with the given code
+            if (!foundCoupon) {
+                return NextResponse.json({ error: 'Invalid coupon code.' }, { status: 400 });
+            };
+
+            // Check if the subtotal meets the minimum purchase requirement for the found coupon
+            if (subtotal < foundCoupon.minimumAmount) {
+                const message = `The purchase amount is required to be a minimum of $${foundCoupon.minimumAmount} to apply/use this coupon.`;
+                return NextResponse.json({ error: message }, { status: 400 });
+            };
+
+
+            // Calculate the discount amount.
+            const discountAmount = (subtotal * foundCoupon.discountPercentage) / 100;
+
+            // Update Cart Discount Amount.
+            result = await cartsCollection.updateOne({ email }, {
+                $set: {
+                    cartDiscount: parseFloat(discountAmount),
+                    appliedCoupon: couponCode,
+                    updatedAt: new Date()
+                }
+            });
+
+            if (result.modifiedCount > 0) {
+                // Send a successful response with the calculated discount and a message
+                // res.status(200).send(result);
+                revalidatePath("/user/cart");
+                revalidatePath("/user/checkout");
+            }
+            break;
 
         default: return NextResponse.json({ error: "Invalid action" }, { status: 400 });
     }
