@@ -7,8 +7,8 @@ import slider2 from '../../public/Slider/slider-2.png'
 import slider3 from '../../public/Slider/slider-3.png'
 import Image from "next/image";
 import { useEffect, useState } from "react";
-const url = "https://grocerpoint.vercel.app";
-// const url = "http://localhost:3000";
+// const url = "https://grocerpoint.vercel.app";
+const url = "http://localhost:3000";
 
 const Banner = () => {
     const [coupons, setCoupons] = useState([]);

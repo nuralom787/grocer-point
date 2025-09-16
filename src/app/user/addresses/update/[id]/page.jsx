@@ -7,8 +7,8 @@ import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 
-const url = "https://grocerpoint.vercel.app";
-// const url = "http://localhost:3000";
+// const url = "https://grocerpoint.vercel.app";
+const url = "http://localhost:3000";
 
 const UpdateAddress = () => {
     const { id } = useParams();
@@ -144,7 +144,7 @@ const UpdateAddress = () => {
                 })
                     .then(res => res.json())
                     .then(data => {
-                        console.log(data);
+                        // console.log(data);
                         if (data.result.acknowledged || data.result.modifiedCount > 0) {
                             setLoading(false);
                             Swal.fire({
@@ -186,7 +186,7 @@ const UpdateAddress = () => {
                 })
                     .then(res => res.json())
                     .then(data => {
-                        console.log(data);
+                        // console.log(data);
                         if (data.result.modifiedCount > 0) {
                             setLoading(false);
                             Swal.fire({

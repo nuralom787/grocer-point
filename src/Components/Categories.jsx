@@ -1,8 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { IoIosArrowForward } from "react-icons/io";
-const url = process.env.NEXTAUTH_URL;
-// const url = "http://localhost:3000";
+// const url = process.env.NEXTAUTH_URL;
+const url = "http://localhost:3000";
 
 const Categories = async () => {
     const res = await fetch(`${url}/api/categories`);
