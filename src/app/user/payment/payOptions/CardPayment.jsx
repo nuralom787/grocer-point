@@ -177,19 +177,19 @@ const CardPayment = () => {
 
                 fetch(`${url}/api/orders`, {
                     method: "POST",
-                    body: JSON.stringify(order_information)
+                    body: JSON.stringify({ order_information })
                 })
                     .then(res => res.json())
                     .then(data => {
                         // console.log(data.data);
-                        if (data.insertedId) {
-                            toast.success(`Your order ${data.orderId.split("-")[1]} has been pleased successfully. your invoice id is: ${data.invoice}.`, {
+                        if (data.result.insertedId && data.result.invoice) {
+                            toast.success(`Your order ${data.result.orderId.split("-")[1]} has been pleased successfully. your invoice id is: ${data.result.invoice}.`, {
                                 position: "top-center",
                                 autoClose: 6000,
                                 style: { fontWeight: "600", color: "#151515", width: "500px", padding: "20px" }
                             });
+                            router.push(`/order/invoice/${data.result.invoice.split("#")[1]}`);
                             router.refresh();
-                            router.push(`/user/order/invoice/${data.insertedId}`)
                             setLoading(false);
                         };
                     })
