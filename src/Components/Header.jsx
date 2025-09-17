@@ -6,8 +6,8 @@ import Image from "next/image";
 import SearchForm from "./forms/SearchForm";
 import ProfileImage from "./user/ProfileImage";
 import { getServerSession } from "next-auth";
-// const url = process.env.NEXTAUTH_URL;
-const url = "http://localhost:3000";
+const url = process.env.NEXTAUTH_URL;
+// const url = "http://localhost:3000";
 
 
 const Header = async () => {

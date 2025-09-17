@@ -6,8 +6,8 @@ import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
-// const url = "https://grocerpoint.vercel.app";
-const url = "http://localhost:3000";
+const url = "https://grocerpoint.vercel.app";
+// const url = "http://localhost:3000";
 
 const CartItemDelAndFabBtn = ({ product }) => {
     const router = useRouter();

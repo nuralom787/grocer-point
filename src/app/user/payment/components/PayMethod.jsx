@@ -11,16 +11,43 @@ import doller from '../../../../../public/dollar.png';
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { toast } from "react-toastify";
-// const url = "https://grocerpoint.vercel.app";
-const url = "http://localhost:3000";
+import { FaArrowRight } from "react-icons/fa";
+import { useRouter } from "next/navigation";
+const url = "https://grocerpoint.vercel.app";
+// const url = "http://localhost:3000";
 
 const PayMethod = () => {
+    const router = useRouter();
     const session = useSession();
     const email = session?.data?.user?.email;
+    const [products, setProducts] = useState([]);
     const [cart, setCart] = useState({});
+    const [account, setAccount] = useState({});
     const [loading, setLoading] = useState(false);
     const [method, setMethod] = useState("");
+    const shippingCost = 60;
 
+    // Load User Data.
+    useEffect(() => {
+        fetch(`${url}/api/myAccount?email=${email}`)
+            .then(res => res.json())
+            .then(data => {
+                setAccount(data)
+            })
+    }, [email]);
+
+
+    // Load Products Data.
+    useEffect(() => {
+        fetch(`${url}/api/products`, { cache: "force-cache" })
+            .then(res => res.json())
+            .then(data => {
+                setProducts(data.products)
+            })
+    }, []);
+
+
+    // Load Cart Data.
     useEffect(() => {
         fetch(`${url}/api/cart/${email}`)
             .then(res => res.json())
@@ -44,8 +71,72 @@ const PayMethod = () => {
     };
 
 
+    // Create COD Payment Function.
+    const confirmOrder = () => {
+        setLoading(true);
+
+        let newCart = [];
+        for (let item of cart.cart) {
+            const newItem = products.find(product => product._id === item._id);
+            newItem.quantity = item.quantity;
+            newCart = [...newCart, newItem];
+        };
+
+        // create order information.
+        const order_information = {
+            customerInfo: {
+                customer_name: account.displayName,
+                customer_phoneNumber: account.phoneNumber,
+                customer_email: account.email,
+                customer_uid: account.uid,
+                customer_id: account._id
+            },
+            cart: newCart,
+            sbAddress: account.addresses[0],
+            subtotal: cart.cartTotalPrice,
+            shippingCost: shippingCost,
+            discount: cart.cartDiscount,
+            appliedCoupon: cart.cartDiscount > 0 ? cart.appliedCoupon : null,
+            total: (cart.cartTotalPrice + shippingCost) - cart.cartDiscount,
+            paymentMethod: "COD",
+            paymentInfo: {
+                paymentType: "Cash-on-delivery"
+            }
+        };
+        console.log(order_information);
+
+        fetch(`${url}/api/orders`, {
+            method: "POST",
+            body: JSON.stringify({ order_information })
+        })
+            .then(res => res.json())
+            .then(data => {
+                // console.log(data.data);
+                if (data.result.insertedId && data.result.invoice) {
+                    toast.success(`Your order ${data.result.orderId.split("-")[1]} has been pleased successfully. your invoice id is: ${data.result.invoice}.`, {
+                        position: "top-center",
+                        autoClose: 6000,
+                        style: { fontWeight: "600", color: "#151515", width: "500px", padding: "20px" }
+                    });
+                    router.push(`/order/invoice/${data.result.invoice.split("#")[1]}`);
+                    router.refresh();
+                    setLoading(false);
+                };
+            })
+            .catch(err => {
+                console.log(err);
+                setLoading(false);
+            });
+    };
+
+
     return (
         <div>
+            {loading &&
+                <div className="fixed inset-0 z-50 bg-black opacity-40 flex items-center justify-center">
+                    <div className="w-12 h-12 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
+                </div>
+            }
             {cart?.cart?.length ?
                 <div>
                     <div className="hidden lg:grid grid-cols-4 pt-5">
@@ -108,7 +199,11 @@ const PayMethod = () => {
                 :
                 <div className="grid grid-cols-4 pt-5">
                     <button
-                        onClick={() => toast.error("Your cart is empty! please add some product to your cart and try to make a payment again.", { style: { width: "500px", padding: "25px", color: "red", fontWeight: "600" } })}
+                        onClick={() => toast.error("Your cart is empty! please add some product to your cart and try to make a payment again.", {
+                            position: "top-center",
+                            autoClose: 5000,
+                            style: { width: "500px", padding: "25px", color: "red", fontWeight: "600" }
+                        })}
                         className={`text-center p-6 grayscale`}
                     >
                         <Image
@@ -121,7 +216,11 @@ const PayMethod = () => {
                         <h5 className="text-sm font-medium leading-9">Credit/Debit Card</h5>
                     </button>
                     <button
-                        onClick={() => toast.error("Your cart is empty! please add some product to your cart and try to make a payment again.", { style: { width: "500px", padding: "25px", color: "red", fontWeight: "600" } })}
+                        onClick={() => toast.error("Your cart is empty! please add some product to your cart and try to make a payment again.", {
+                            position: "top-center",
+                            autoClose: 5000,
+                            style: { width: "500px", padding: "25px", color: "red", fontWeight: "600" }
+                        })}
                         className={`text-center p-6 grayscale`}
                     >
                         <Image
@@ -134,7 +233,11 @@ const PayMethod = () => {
                         <h5 className="text-sm font-medium leading-9">Bkash</h5>
                     </button>
                     <button
-                        onClick={() => toast.error("Your cart is empty! please add some product to your cart and try to make a payment again.", { style: { width: "500px", padding: "25px", color: "red", fontWeight: "600" } })}
+                        onClick={() => toast.error("Your cart is empty! please add some product to your cart and try to make a payment again.", {
+                            position: "top-center",
+                            autoClose: 5000,
+                            style: { width: "500px", padding: "25px", color: "red", fontWeight: "600" }
+                        })}
                         className={`text-center p-6 grayscale`}
                     >
                         <Image
@@ -147,7 +250,11 @@ const PayMethod = () => {
                         <h5 className="text-sm font-medium leading-9">Nagad</h5>
                     </button>
                     <button
-                        onClick={() => toast.error("Your cart is empty! please add some product to your cart and try to make a payment again.", { style: { width: "500px", padding: "25px", color: "red", fontWeight: "600" } })}
+                        onClick={() => toast.error("Your cart is empty! please add some product to your cart and try to make a payment again.", {
+                            position: "top-center",
+                            autoClose: 5000,
+                            style: { width: "500px", padding: "25px", color: "red", fontWeight: "600" }
+                        })}
                         className={`text-center p-6 grayscale`}
                     >
                         <Image

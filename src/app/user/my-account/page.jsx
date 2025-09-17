@@ -133,7 +133,11 @@ const MyAccount = async () => {
                                                             </td>
                                                             <td className="text-center font-bold">${order.total.toFixed(2)}</td>
                                                             <td className="text-center">
-                                                                <Link className="font-semibold text-xs bg-emerald-100 text-emerald-600 hover:bg-emerald-600 hover:text-white duration-500 px-3.5 py-1.5 rounded-full" href={`/order/invoice/${order._id}`}>Details</Link>
+                                                                <Link
+                                                                    className="font-semibold text-xs bg-emerald-100 text-emerald-600 hover:bg-emerald-600 hover:text-white duration-500 px-3.5 py-1.5 rounded-full"
+                                                                    href={`/order/invoice/${order.invoice.split("#")[1]}`}>
+                                                                    Details
+                                                                </Link>
                                                             </td>
                                                         </tr>)
                                                     }

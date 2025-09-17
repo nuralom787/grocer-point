@@ -5,8 +5,8 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
-// const localUrl = "https://grocerpoint.vercel.app";
-const localUrl = "http://localhost:3000";
+const localUrl = "https://grocerpoint.vercel.app";
+// const localUrl = "http://localhost:3000";
 
 const ProductQuantityBtn = ({ id, product }) => {
     const session = useSession();

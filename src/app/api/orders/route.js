@@ -95,6 +95,8 @@ export const POST = async (req) => {
         revalidatePath("/");
         revalidatePath("/order/invoice/[invoiceId]");
         revalidatePath("/user/payment");
+        revalidatePath("/user/my-account");
+        revalidatePath("/user/orders");
         return NextResponse.json({ success: true, result });
     }
     else {

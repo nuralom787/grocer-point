@@ -9,8 +9,8 @@ import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
-// const url = "https://grocerpoint.vercel.app";
-const url = "http://localhost:3000";
+const url = "https://grocerpoint.vercel.app";
+// const url = "http://localhost:3000";
 
 const CardPayment = () => {
     const session = useSession();
@@ -203,65 +203,72 @@ const CardPayment = () => {
 
 
     return (
-        <form onSubmit={onSubmit} className='bg-white p-5 lg:p-10'>
-            <div className="flex items-center gap-4">
-                <Image
-                    src={visa}
-                    alt="Payment Options Logo"
-                    className="h-10 w-10"
-                    loading='eager'
-                />
-                <Image
-                    src={masterCard}
-                    alt="Payment Options Logo"
-                    className="h-10 w-10"
-                    loading='eager'
-                />
-                <Image
-                    src={americanExpress}
-                    alt="Payment Options Logo"
-                    className="h-10 w-10"
-                    loading='eager'
-                />
-            </div>
-            <div className="border border-gray-400 rounded py-2.5 px-4 mt-5 mb-2">
-                <CardElement
-                    options={{
-                        style: {
-                            base: {
-                                fontSize: '18px',
-                                fontWeight: '600',
-                                color: '#424770',
-                                '::placeholder': {
-                                    color: '#aab7c4',
+        <div>
+            {loading &&
+                <div className="fixed inset-0 z-50 bg-black opacity-40 flex items-center justify-center">
+                    <div className="w-12 h-12 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
+                </div>
+            }
+            <form onSubmit={onSubmit} className='bg-white p-5 lg:p-10'>
+                <div className="flex items-center gap-4">
+                    <Image
+                        src={visa}
+                        alt="Payment Options Logo"
+                        className="h-10 w-10"
+                        loading='eager'
+                    />
+                    <Image
+                        src={masterCard}
+                        alt="Payment Options Logo"
+                        className="h-10 w-10"
+                        loading='eager'
+                    />
+                    <Image
+                        src={americanExpress}
+                        alt="Payment Options Logo"
+                        className="h-10 w-10"
+                        loading='eager'
+                    />
+                </div>
+                <div className="border border-gray-400 rounded py-2.5 px-4 mt-5 mb-2">
+                    <CardElement
+                        options={{
+                            style: {
+                                base: {
+                                    fontSize: '18px',
+                                    fontWeight: '600',
+                                    color: '#424770',
+                                    '::placeholder': {
+                                        color: '#aab7c4',
+                                    },
+                                },
+                                invalid: {
+                                    color: '#9e2146',
                                 },
                             },
-                            invalid: {
-                                color: '#9e2146',
-                            },
-                        },
-                    }}
-                />
-            </div>
-            <div>
-                <p className="text-sm text-red-500 font-semibold leading-6">{error}</p>
-            </div>
-            <div className="my-6">
-                {loading ?
-                    <button
-                        className="w-full lg:w-fit bg-orange-500 text-white py-2.5 px-6 rounded text-sm"
-                        type="submit" disabled>
-                        Processing.. <span className="loading loading-spinner loading-sm"></span>
-                    </button>
-                    :
-                    <button
-                        className="w-full lg:w-fit bg-orange-400 hover:bg-orange-500 duration-500 text-white py-2.5 px-6 rounded cursor-pointer text-sm"
-                        type="submit" disabled={!stripe || !clientSecret}>
-                        Pay Now
-                    </button>
-                }
-            </div>
-        </form>
+                        }}
+                    />
+                </div>
+                <div>
+                    <p className="text-sm text-red-500 font-semibold leading-6">{error}</p>
+                </div>
+                <div className="my-6">
+                    {loading ?
+                        <button
+                            className="w-full lg:w-fit bg-orange-500 text-white py-2.5 px-6 rounded text-sm"
+                            type="submit" disabled>
+                            Processing.. <span className="loading loading-spinner loading-sm"></span>
+                        </button>
+                        :
+                        <button
+                            className="w-full lg:w-fit bg-orange-400 hover:bg-orange-500 duration-500 text-white py-2.5 px-6 rounded cursor-pointer text-sm"
+                            type="submit" disabled={!stripe || !clientSecret}>
+                            Pay Now
+                        </button>
+                    }
+                </div>
+            </form>
+        </div>
     );
 };
 

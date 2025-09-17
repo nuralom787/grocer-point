@@ -5,8 +5,8 @@ import Link from "next/link";
 import { MdOutlinePayments } from "react-icons/md";
 import { IoBagHandle } from "react-icons/io5";
 import Image from "next/image";
-// const url = process.env.NEXTAUTH_URL;
-const url = "http://localhost:3000";
+const url = process.env.NEXTAUTH_URL;
+// const url = "http://localhost:3000";
 
 
 const Checkout = async () => {
@@ -98,7 +98,7 @@ const Checkout = async () => {
                             </div>
                             <div className="flex justify-between items-center gap-2">
                                 <p className="font-medium text-sm text-gray-600 leading-8">Shipping Fee</p>
-                                <p className="font-medium text-sm">${(60).toFixed(2)}</p>
+                                <p className="font-medium text-sm">${(cart?.cartTotalPrice > 0 ? 60 : 0).toFixed(2)}</p>
                             </div>
                             <div className="flex justify-between items-center gap-2">
                                 <p className="font-medium text-sm text-gray-600 leading-8">Discount</p>
@@ -115,7 +115,7 @@ const Checkout = async () => {
                         }
                         <div className="flex justify-between items-center gap-2">
                             <p className="font-bold text-xl text-[#151515] leading-12">Total</p>
-                            <p className="font-bold text-xl text-red-600">${((cart?.cartTotalPrice + 60) - cart?.cartDiscount).toFixed(2) || "00.00"}</p>
+                            <p className="font-bold text-xl text-red-600">${((cart?.cartTotalPrice + (cart?.cartTotalPrice > 0 ? 60 : 0)) - cart?.cartDiscount).toFixed(2) || "00.00"}</p>
                         </div>
                         <div className="flex items-center gap-2">
                             <Link
