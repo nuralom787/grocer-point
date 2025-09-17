@@ -6,7 +6,7 @@ const middleware = async (req) => {
 
     const token = await getToken({
         req,
-        // secureCookie: process.env.NODE_ENV === "production" ? true : false
+        secureCookie: process.env.NODE_ENV === "production" ? true : false
     });
 
     if (token) {

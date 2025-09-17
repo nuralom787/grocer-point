@@ -4,6 +4,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 import GitHubProvider from "next-auth/providers/github";
 import dbConnect, { collectionsNames } from "@/lib/dbConnect";
+import { revalidatePath } from "next/cache";
 
 export const authOptions = {
     providers: [
@@ -61,6 +62,7 @@ export const authOptions = {
             //         return false
             //     }
             // }
+            revalidatePath("/");
             return true
         }
     }

@@ -22,21 +22,24 @@ const LoginPage = () => {
             const res = await signIn("credentials", { email, password, callbackUrl: "/", redirect: false });
 
             if (res.ok) {
-                router.push("/");
                 form.reset();
                 // toast.success("Login Successfully", {
                 //     position: "top-center",
                 //     autoClose: 3500
                 // })
                 setLoading(false);
-            } else {
+                router.push("/");
+                router.refresh();
+            }
+            else {
                 toast.error("Authentications Failed!! Please Try Again..", {
                     position: "top-center",
                     autoClose: 3500
                 })
                 setLoading(false);
             }
-        } catch (error) {
+        }
+        catch (error) {
             // console.log(error)
             toast.error("Authentication Failed!!");
             setLoading(false);
