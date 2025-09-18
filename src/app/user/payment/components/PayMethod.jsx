@@ -13,8 +13,8 @@ import Image from "next/image";
 import { toast } from "react-toastify";
 import { FaArrowRight } from "react-icons/fa";
 import { useRouter } from "next/navigation";
-const url = "https://grocerpoint.vercel.app";
-// const url = "http://localhost:3000";
+// const url = "https://grocerpoint.vercel.app";
+const url = "http://localhost:3000";
 
 const PayMethod = () => {
     const router = useRouter();

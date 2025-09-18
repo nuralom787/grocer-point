@@ -1,39 +1,84 @@
 "use client";
 
-import { useState } from "react";
-// import useAxiosSecure from "../../../Hooks/useAxiosSecure";
-// import useCart from "../../../Hooks/useCart";
-// import useMyAccount from "../../../Hooks/useMyAccount";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+// const url = "https://grocerpoint.vercel.app";
+const url = "http://localhost:3000";
 
 const BkashPayment = () => {
-    // const axiosSecure = useAxiosSecure();
-    // const [account] = useMyAccount();
-    // const [cart, , isPending, isError] = useCart();
+    const router = useRouter();
+    const session = useSession();
+    const [cart, setCart] = useState({});
+    const [products, setProducts] = useState([]);
+    const [account, setAccount] = useState({});
     const [loading, setLoading] = useState(false);
     const shippingCost = 60;
+    const email = session?.data?.user?.email;
+
+
+
+    // Load Cart Data.
+    useEffect(() => {
+        fetch(`${url}/api/cart/${email}`)
+            .then(res => res.json())
+            .then(data => {
+                setCart(data);
+            })
+    }, [email]);
+
+
+    // Load Products Data.
+    useEffect(() => {
+        fetch(`${url}/api/products`)
+            .then(res => res.json())
+            .then(data => {
+                setProducts(data.products);
+            })
+    }, []);
+
+
+    // Load Account Data.
+    useEffect(() => {
+        fetch(`${url}/api/myAccount?email=${email}`)
+            .then(res => res.json())
+            .then(data => {
+                setAccount(data);
+            })
+    }, [email]);
+
+
+
 
     const payWithBkash = () => {
-        if (!isPending || !isError) {
-            // setLoading(true);
-            // const price = parseFloat((cart.cartTotalPrice + shippingCost) - cart.cartDiscount);
-            // // const price = parseFloat(cart.cartTotalPrice);
-            // axiosSecure.post("/create_payment", { price: price })
-            //     .then(res => {
-            //         // console.log(res.data);
-            //         if (res.data.bkashURL && res.data.paymentID && res.data.statusMessage === "Successful") {
-            //             window.location.href = res.data.bkashURL;
-            //         };
-            //     })
-            //     .catch(error => {
-            //         console.error(error.message);
-            //         setLoading(false);
-            //     })
-        }
+        setLoading(true);
+        const price = parseFloat((cart?.cartTotalPrice + shippingCost) - cart?.cartDiscount);
+        const action = "create-bkash-payment";
+
+        fetch(`${url}/api/payment`, {
+            method: "POST",
+            body: JSON.stringify({ price, action })
+        })
+            .then(res => res.json())
+            .then(data => {
+                // console.log(data);
+                router.push(data.result.bkashURL);
+                setLoading(false);
+            })
+            .catch(error => {
+                console.error(error.message);
+                setLoading(false);
+            })
     };
 
 
     return (
         <section className='bg-white py-5 px-10 font-inter text-sm'>
+            {loading &&
+                <div className="fixed inset-0 z-50 bg-black opacity-40 flex items-center justify-center">
+                    <div className="w-12 h-12 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
+                </div>
+            }
             <div className="p-4">
                 <h4 className="pb-3.5 font-semibold">-- Please Note.</h4>
                 <ol className="list-decimal space-y-3.5 font-bold text-red-600">
