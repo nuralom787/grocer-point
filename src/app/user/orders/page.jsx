@@ -11,7 +11,7 @@ const url = process.env.NEXT_PUBLIC_BASE_URL;
 
 const UserOrders = async () => {
     const session = await getServerSession();
-    const orderRes = await fetch(`${url}/api/orders?email=${session?.user?.email}`, { cache: "force-cache" });
+    const orderRes = await fetch(`${url}/api/orders?email=${session?.user?.email}`, { next: { revalidate: 60, tags: ["orders"] } });
     const orders = await orderRes.json();
 
     const pendingOrders = orders?.filter(order => order.status === "Pending");
