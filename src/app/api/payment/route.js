@@ -4,8 +4,7 @@ import { setValue, getValue } from "node-global-storage";
 
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 const ordersCollection = dbConnect(collectionsNames.ordersCollection);
-// const url = process.env.NEXTAUTH_URL;
-const url = "http://localhost:3000";
+const url = process.env.NEXT_PUBLIC_BASE_URL;
 
 // Bkash Payment Related url's.
 const grant_token_url = process.env.BKASH_GRANT_TOKEN_URL;
@@ -131,7 +130,7 @@ export const GET = async (req) => {
 
         if (executeData.statusCode === "0000" && executeData.statusMessage === "Successful") {
             const invoice = getValue("invoiceId");
-            return NextResponse.redirect(`${url}/user/payment?paymentID=${paymentID}&status=${status}&trxID=${executeData.trxID}&transactionStatus=${executeData.transactionStatus}&invoiceId=${invoice.slice(1, 7)}`);
+            return NextResponse.redirect(`${url}/user/verify-payments?paymentID=${paymentID}&status=${status}&trxID=${executeData.trxID}&transactionStatus=${executeData.transactionStatus}&invoiceId=${invoice.slice(1, 7)}`);
         }
     }
 };

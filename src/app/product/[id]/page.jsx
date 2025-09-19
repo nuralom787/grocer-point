@@ -8,8 +8,7 @@ import { MdOutlineWbSunny } from "react-icons/md";
 import { CiLocationOn } from "react-icons/ci";
 import ProductQuantityBtn from "./components/ProductQuantityBtn";
 
-const url = process.env.NEXTAUTH_URL;
-// const url = "http://localhost:3000";
+const url = process.env.NEXT_PUBLIC_BASE_URL;
 
 const SingleProduct = async ({ params }) => {
     const id = await params.id;

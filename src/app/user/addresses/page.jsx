@@ -2,7 +2,7 @@ import { FiMapPin } from "react-icons/fi";
 import NavigationPanel from "../components/NavigationPanel";
 import Link from "next/link";
 import { getServerSession } from "next-auth";
-const url = process.env.NEXTAUTH_URL;
+const url = process.env.NEXT_PUBLIC_BASE_URL;
 
 const UserAddresses = async () => {
     const session = await getServerSession();

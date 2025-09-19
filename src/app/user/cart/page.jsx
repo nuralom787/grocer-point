@@ -8,8 +8,7 @@ import CartItemQuantityBtn from "./components/CartItemQuantityBtn";
 import CartCouponApplyBtn from "./components/CartCouponApplyBtn";
 import CartCheckoutBtn from "./components/CartCheckoutBtn";
 import { headers } from "next/headers";
-const url = process.env.NEXTAUTH_URL;
-// const url = "http://localhost:3000";
+const url = process.env.NEXT_PUBLIC_BASE_URL;
 
 const Cart = async () => {
     const session = await getServerSession();

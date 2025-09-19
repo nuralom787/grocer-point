@@ -3,8 +3,7 @@
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-// const url = "https://grocerpoint.vercel.app";
-const url = "http://localhost:3000";
+const url = process.env.NEXT_PUBLIC_BASE_URL;
 
 const BkashPayment = () => {
     const router = useRouter();
@@ -52,7 +51,8 @@ const BkashPayment = () => {
 
     const payWithBkash = () => {
         setLoading(true);
-        const price = parseFloat((cart?.cartTotalPrice + shippingCost) - cart?.cartDiscount);
+        // const price = parseFloat((cart?.cartTotalPrice + shippingCost) - cart?.cartDiscount);
+        const price = parseFloat(1);
         const action = "create-bkash-payment";
 
         fetch(`${url}/api/payment`, {
@@ -61,7 +61,7 @@ const BkashPayment = () => {
         })
             .then(res => res.json())
             .then(data => {
-                // console.log(data);
+                console.log(data);
                 router.push(data.result.bkashURL);
                 setLoading(false);
             })

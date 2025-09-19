@@ -7,8 +7,7 @@ import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 
-const url = "https://grocerpoint.vercel.app";
-// const url = "http://localhost:3000";
+const url = process.env.NEXT_PUBLIC_BASE_URL;
 
 const UpdateAddress = () => {
     const { id } = useParams();

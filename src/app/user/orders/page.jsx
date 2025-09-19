@@ -6,7 +6,7 @@ import { RxLoop } from "react-icons/rx";
 import { FiTruck } from 'react-icons/fi';
 import { FaCheck } from 'react-icons/fa';
 import Link from 'next/link';
-const url = process.env.NEXTAUTH_URL;
+const url = process.env.NEXT_PUBLIC_BASE_URL;
 
 
 const UserOrders = async () => {

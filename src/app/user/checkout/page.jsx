@@ -5,8 +5,7 @@ import Link from "next/link";
 import { MdOutlinePayments } from "react-icons/md";
 import { IoBagHandle } from "react-icons/io5";
 import Image from "next/image";
-const url = process.env.NEXTAUTH_URL;
-// const url = "http://localhost:3000";
+const url = process.env.NEXT_PUBLIC_BASE_URL;
 
 
 const Checkout = async () => {

@@ -22,7 +22,7 @@ export const GET = async (req) => {
 export const POST = async (req) => {
     const body = await req.json();
     const { order_information } = body;
-    console.log("From API:", order_information);
+    // console.log("From API:", order_information);
     const email = order_information.customerInfo.customer_email;
     let orderId;
     let orderExists = true;

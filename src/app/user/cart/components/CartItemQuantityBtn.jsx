@@ -3,8 +3,7 @@
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-const url = "https://grocerpoint.vercel.app";
-// const url = "http://localhost:3000";
+const url = process.env.NEXT_PUBLIC_BASE_URL;
 
 const CartItemQuantityBtn = ({ product }) => {
     const router = useRouter()

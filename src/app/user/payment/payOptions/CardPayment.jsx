@@ -9,8 +9,7 @@ import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
-// const url = "https://grocerpoint.vercel.app";
-const url = "http://localhost:3000";
+const url = process.env.NEXT_PUBLIC_BASE_URL;
 
 const CardPayment = () => {
     const session = useSession();

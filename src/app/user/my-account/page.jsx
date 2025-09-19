@@ -2,7 +2,7 @@ import { getServerSession } from "next-auth";
 import Link from "next/link";
 import { LuMapPin } from "react-icons/lu";
 import NavigationPanel from "../components/NavigationPanel";
-const url = process.env.NEXTAUTH_URL;
+const url = process.env.NEXT_PUBLIC_BASE_URL;
 
 
 const MyAccount = async () => {

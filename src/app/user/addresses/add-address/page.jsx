@@ -7,8 +7,7 @@ import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import Swal from "sweetalert2";
 
-const url = "https://grocerpoint.vercel.app";
-// const url = "http://localhost:3000";
+const url = process.env.NEXT_PUBLIC_BASE_URL;
 
 const AddAddress = () => {
     const session = useSession();
