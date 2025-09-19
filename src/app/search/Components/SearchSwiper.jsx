@@ -6,7 +6,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { useEffect, useState } from "react";
 import Link from 'next/link';
 import Image from 'next/image';
-const localUrl = "https://grocerpoint.vercel.app";
+const url = process.env.NEXT_PUBLIC_BASE_URL;
 
 
 const SearchSwiper = () => {

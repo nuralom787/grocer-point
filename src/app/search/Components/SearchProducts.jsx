@@ -6,8 +6,7 @@ import noFound from '../../../../public/notFound.svg';
 import Link from "next/link";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
-const localUrl = "https://grocerpoint.vercel.app";
-// const localUrl = "http://localhost:3000";
+const url = process.env.NEXT_PUBLIC_BASE_URL;
 
 const SearchProducts = () => {
     const [matchProduct, setMatchProduct] = useState([]);
@@ -23,7 +22,7 @@ const SearchProducts = () => {
 
 
     useEffect(() => {
-        fetch(`${localUrl}/api/products?search=${search}&parent=${parent}&children=${children}&price=${price}&id=${_id}`)
+        fetch(`${localUrl}/api/products?search=${search}&parent=${parent}&children=${children}&price=${price}&id=${_id}`, { cache: "force-cache" })
             .then(res => res.json())
             .then(data => {
                 setMatchProduct(data.products);

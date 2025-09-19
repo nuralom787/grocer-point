@@ -9,7 +9,7 @@ const MyAccount = async () => {
     const session = await getServerSession();
     const acRes = await fetch(`${url}/api/myAccount?email=${session?.user?.email}`, { cache: "force-cache" });
     const account = await acRes.json();
-    const orderRes = await fetch(`${url}/api/orders?email=${session?.user?.email}`, { cache: "force-cache" });
+    const orderRes = await fetch(`${url}/api/orders?email=${session?.user?.email}`, { next: { revalidate: 120 } });
     const orders = await orderRes.json();
 
 
