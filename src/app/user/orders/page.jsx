@@ -75,7 +75,7 @@ const UserOrders = async () => {
                                             <thead className="bg-gray-50">
                                                 <tr className="bg-gray-100">
                                                     <th className="text-start text-xs font-semibold px-6 py-3 text-gray-700 uppercase tracking-wider">ID</th>
-                                                    <th className="text-center text-xs font-semibold px-6 py-3 text-gray-700 uppercase tracking-wider">Order Time</th>
+                                                    <th className="text-center text-xs font-semibold px-6 py-3 text-gray-700 uppercase tracking-wider">Order Date & Time</th>
                                                     <th className="text-center text-xs font-semibold px-6 py-3 text-gray-700 uppercase tracking-wider">Method</th>
                                                     <th className="text-center text-xs font-semibold px-6 py-3 text-gray-700 uppercase tracking-wider">Status</th>
                                                     <th className="text-center text-xs font-semibold px-6 py-3 text-gray-700 uppercase tracking-wider">Total</th>
@@ -85,11 +85,17 @@ const UserOrders = async () => {
                                             <tbody className="bg-white divide-y divide-gray-200 text-sm">
                                                 {orders?.reverse()?.map((order, id) => <tr key={id}>
                                                     <th className="px-5 py-3.5 whitespace-nowrap font-normal text-start">{order.orderId.split("-")[1]}</th>
-                                                    <td className="px-5 py-3.5 whitespace-nowrap font-normal text-center">{new Date(order.createdAt).toLocaleString("en-BD", {
-                                                        month: "long",
-                                                        day: "2-digit",
-                                                        year: "numeric"
-                                                    })}</td>
+                                                    <td className="px-5 py-3.5 whitespace-nowrap font-normal text-center">
+                                                        {new Date(order.createdAt).toLocaleDateString("en-BD", {
+                                                            day: "2-digit",
+                                                            month: "short",
+                                                            year: "numeric",
+                                                        })} {new Date(order.createdAt).toLocaleTimeString("en-BD", {
+                                                            hour: "2-digit",
+                                                            minute: "2-digit",
+                                                            hour12: true,
+                                                        })}
+                                                    </td>
                                                     <td className="px-5 py-3.5 whitespace-nowrap text-center">{order.paymentMethod}</td>
                                                     <td className="px-5 py-3.5 whitespace-nowrap text-center">
                                                         {order.status === "Pending" && <span className="text-orange-600 font-semibold">Pending</span>}

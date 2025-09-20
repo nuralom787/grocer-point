@@ -114,14 +114,14 @@ const MyAccount = async () => {
                                                             <td className="font-bold text-center">{idx + 1}</td>
                                                             <td className="font-medium text-center">{order.invoice}</td>
                                                             <td className="font-medium text-center leading-7">
-                                                                {new Date(order.createdAt).toLocaleString("en-BD", {
-                                                                    month: "long",
+                                                                {new Date(order.createdAt).toLocaleDateString("en-BD", {
                                                                     day: "2-digit",
-                                                                    year: "numeric"
-                                                                })}  {new Date(order.createdAt).toLocaleString("en-BD", {
+                                                                    month: "short",
+                                                                    year: "numeric",
+                                                                })} {new Date(order.createdAt).toLocaleTimeString("en-BD", {
                                                                     hour: "2-digit",
                                                                     minute: "2-digit",
-                                                                    hour12: true
+                                                                    hour12: true,
                                                                 })}
                                                             </td>
                                                             <td className="text-center font-medium">{order.paymentMethod}</td>
