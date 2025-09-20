@@ -51,7 +51,7 @@ const ProductQuantityBtn = ({ id, product }) => {
                 };
                 const action = "add-item";
                 const data = { email, item, action };
-                const cartRes = await fetch(`${localUrl}/api/cart`, {
+                const cartRes = await fetch(`${url}/api/cart`, {
                     method: "PATCH",
                     body: JSON.stringify(data)
                 });

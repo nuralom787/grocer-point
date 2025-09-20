@@ -13,7 +13,6 @@ const url = process.env.NEXT_PUBLIC_BASE_URL;
 
 const VerifyPayments = ({ searchParams }) => {
     const { paymentID, status, trxID, transactionStatus, invoiceId } = React.use(searchParams);
-    // console.log({ paymentID, status, trxID, transactionStatus, invoiceId });
     const session = useSession();
     const router = useRouter();
     const email = session?.data?.user?.email;
@@ -68,7 +67,6 @@ const VerifyPayments = ({ searchParams }) => {
             setFailed(true);
             setLoading(false);
         }
-
 
         // Make Order information and placed order.
         if (cart?.email && products.length) {

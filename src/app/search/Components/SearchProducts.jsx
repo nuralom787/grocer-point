@@ -22,7 +22,7 @@ const SearchProducts = () => {
 
 
     useEffect(() => {
-        fetch(`${localUrl}/api/products?search=${search}&parent=${parent}&children=${children}&price=${price}&id=${_id}`, { cache: "force-cache" })
+        fetch(`${url}/api/products?search=${search}&parent=${parent}&children=${children}&price=${price}&id=${_id}`, { cache: "force-cache" })
             .then(res => res.json())
             .then(data => {
                 setMatchProduct(data.products);

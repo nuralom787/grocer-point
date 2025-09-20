@@ -9,12 +9,9 @@ const BkashPayment = () => {
     const router = useRouter();
     const session = useSession();
     const [cart, setCart] = useState({});
-    const [products, setProducts] = useState([]);
-    const [account, setAccount] = useState({});
     const [loading, setLoading] = useState(false);
     const shippingCost = 60;
     const email = session?.data?.user?.email;
-
 
 
     // Load Cart Data.
@@ -27,32 +24,10 @@ const BkashPayment = () => {
     }, [email]);
 
 
-    // Load Products Data.
-    useEffect(() => {
-        fetch(`${url}/api/products`)
-            .then(res => res.json())
-            .then(data => {
-                setProducts(data.products);
-            })
-    }, []);
-
-
-    // Load Account Data.
-    useEffect(() => {
-        fetch(`${url}/api/myAccount?email=${email}`)
-            .then(res => res.json())
-            .then(data => {
-                setAccount(data);
-            })
-    }, [email]);
-
-
-
 
     const payWithBkash = () => {
         setLoading(true);
-        // const price = parseFloat((cart?.cartTotalPrice + shippingCost) - cart?.cartDiscount);
-        const price = parseFloat(1);
+        const price = parseFloat((cart?.cartTotalPrice + shippingCost) - cart?.cartDiscount);
         const action = "create-bkash-payment";
 
         fetch(`${url}/api/payment`, {
@@ -61,8 +36,8 @@ const BkashPayment = () => {
         })
             .then(res => res.json())
             .then(data => {
-                console.log(data);
-                router.push(data.result.bkashURL);
+                // console.log(data);
+                router.replace(data.result.bkashURL);
                 setLoading(false);
             })
             .catch(error => {

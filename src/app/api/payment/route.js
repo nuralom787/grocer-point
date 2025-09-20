@@ -42,7 +42,7 @@ export const POST = async (req) => {
                 const invoice = await ordersCollection.findOne({ invoiceId });
                 invoiceExists = !!invoice;
             };
-            setValue("invoiceId", invoiceId);
+            // setValue("invoiceId", invoiceId);
 
             // Fetch Grand Token.
             const tokenResponse = await fetch(`${grant_token_url}`, {
@@ -64,21 +64,21 @@ export const POST = async (req) => {
                 return NextResponse.json({ error: "Failed to fetch token" }, { status: 500 });
             }
             else {
-                setValue("id_token", tokenData.id_token, { protected: true });
+                // setValue("id_token", tokenData.id_token, { protected: true });
 
                 // Payment Create Options.
                 const createResponse = await fetch(`${create_url}`, {
                     method: 'POST',
                     headers: {
                         accept: 'application/json',
-                        Authorization: `Bearer ${getValue("id_token")}`,
+                        Authorization: `Bearer ${tokenData.id_token}`,
                         'X-APP-Key': process.env.BKASH_APP_KEY,
                         'content-type': 'application/json'
                     },
                     body: JSON.stringify({
                         mode: '0011',
                         payerReference: ' ',
-                        callbackURL: `${url}/api/payment`,
+                        callbackURL: `${url}/api/payment?token=${tokenData.id_token}&invoiceId=${invoiceId.slice(1, 7)}`,
                         amount: parseFloat(price).toFixed(2),
                         currency: 'BDT',
                         intent: 'sale',
@@ -87,8 +87,8 @@ export const POST = async (req) => {
                 })
                 const createData = await createResponse.json();
                 result = createData;
-                break;
             }
+            break;
 
         default: return NextResponse.json({ error: "Invalid action" }, { status: 400 });
     }
@@ -99,11 +99,13 @@ export const POST = async (req) => {
 
 export const GET = async (req) => {
     const { searchParams } = new URL(req.url);
+    const token = searchParams.get("token");
+    const invoiceId = searchParams.get("invoiceId");
     const paymentID = searchParams.get("paymentID");
     const status = searchParams.get("status");
 
     // Set Payment ID In The Global Storage.
-    setValue("paymentID", paymentID, { protected: true });
+    // setValue("paymentID", paymentID, { protected: true });
 
     // Check If Payment Cancel Or Fail.
     if (status === "cancel" || status === "failure") {
@@ -117,7 +119,7 @@ export const GET = async (req) => {
             method: 'POST',
             headers: {
                 accept: 'application/json',
-                Authorization: `Bearer ${getValue("id_token")}`,
+                Authorization: `Bearer ${token}`,
                 'X-APP-Key': process.env.BKASH_APP_KEY,
                 'content-type': 'application/json'
             },
@@ -129,8 +131,8 @@ export const GET = async (req) => {
 
 
         if (executeData.statusCode === "0000" && executeData.statusMessage === "Successful") {
-            const invoice = getValue("invoiceId");
-            return NextResponse.redirect(`${url}/user/verify-payments?paymentID=${paymentID}&status=${status}&trxID=${executeData.trxID}&transactionStatus=${executeData.transactionStatus}&invoiceId=${invoice.slice(1, 7)}`);
+            // const invoice = getValue("invoiceId");
+            return NextResponse.redirect(`${url}/user/verify-payments?paymentID=${paymentID}&status=${status}&trxID=${executeData.trxID}&transactionStatus=${executeData.transactionStatus}&invoiceId=${invoiceId}`);
         }
     }
 };

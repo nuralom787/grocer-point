@@ -13,7 +13,7 @@ const SearchSwiper = () => {
     const [categories, setCategories] = useState([]);
 
     useEffect(() => {
-        fetch(`${localUrl}/api/categories`)
+        fetch(`${url}/api/categories`)
             .then(res => res.json())
             .then(data => setCategories(data))
     }, []);
