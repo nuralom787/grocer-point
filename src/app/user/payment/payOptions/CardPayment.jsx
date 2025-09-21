@@ -187,7 +187,7 @@ const CardPayment = () => {
                                 autoClose: 6000,
                                 style: { fontWeight: "600", color: "#151515", width: "500px", padding: "20px" }
                             });
-                            router.push(`/order/invoice/${data.result.invoice.split("#")[1]}`);
+                            router.push(`/order/invoice/${data.result.insertedId}`);
                             router.refresh();
                             setLoading(false);
                         };

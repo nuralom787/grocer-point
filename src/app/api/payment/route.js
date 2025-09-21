@@ -19,6 +19,7 @@ export const POST = async (req) => {
     let result;
 
     switch (action) {
+        // Work for Card Payment.
         case "create-payment-intent":
             const paymentIntent = await stripe.paymentIntents.create({
                 amount: amount,
@@ -29,6 +30,7 @@ export const POST = async (req) => {
             result = { clientSecret: paymentIntent.client_secret };
             break;
 
+        // Work for Bkash Payment.
         case "create-bkash-payment":
             let invoiceId;
             let invoiceExists = true;
@@ -97,6 +99,7 @@ export const POST = async (req) => {
 };
 
 
+// Only Work For Bkash Payment.
 export const GET = async (req) => {
     const { searchParams } = new URL(req.url);
     const token = searchParams.get("token");
