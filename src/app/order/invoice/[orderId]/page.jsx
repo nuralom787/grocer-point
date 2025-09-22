@@ -1,6 +1,7 @@
 import { getServerSession } from "next-auth";
 import logo from '../../../../../public/logo-with-title.jpg';
 import Image from "next/image";
+import PrintAndDownloadBtn from "./Components/PrintAndDownloadBtn";
 
 const url = process.env.NEXT_PUBLIC_BASE_URL;
 
@@ -111,16 +112,7 @@ const OrderInvoice = async ({ params }) => {
                             </div>
                         </div>
                     </section>
-                    <div className="invoice-btn bg-white p-8 rounded-b-xl shadow-sm">
-                        {/* <div className="flex lg:flex-row md:flex-row sm:flex-row flex-col justify-between invoice-btn">
-                            <button className="mb-3 sm:mb-0 md:mb-0 lg:mb-0 flex items-center justify-center bg-emerald-500 text-white transition-all font-semibold h-10 py-2 px-5 rounded-md">
-                                Download Invoice <FaFileDownload className="ms-3 text-lg" />
-                            </button>
-                            <button onClick={() => window.print()} className="cursor-pointer mb-3 sm:mb-0 md:mb-0 lg:mb-0 flex items-center justify-center bg-emerald-500 text-white transition-all font-semibold h-10 py-2 px-5 rounded-md">
-                                Print Invoice <MdOutlineLocalPrintshop className="ms-3 text-lg" />
-                            </button>
-                        </div> */}
-                    </div>
+                    <PrintAndDownloadBtn />
                 </div>
             </section>
         </div>

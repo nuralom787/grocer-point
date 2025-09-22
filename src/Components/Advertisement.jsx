@@ -8,7 +8,7 @@ import Link from "next/link";
 
 const Advertisement = () => {
     return (
-        <div className='container-width px-3 lg:px-6'>
+        <div className='advertisement container-width px-3 lg:px-6'>
             <div className="max-w-screen-2xl mx-auto px-4 xl:px-6 py-10 xl:py-24">
                 <div className="flex justify-center lg:justify-between items-center gap-10">
                     <Image className='hidden lg:block' src={logo1} alt="Advertisement Logo" width={400} height={200} loading="eager" />

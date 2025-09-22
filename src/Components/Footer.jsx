@@ -9,7 +9,7 @@ import Image from 'next/image';
 
 const Footer = () => {
     return (
-        <div className='bg-white'>
+        <div className='bg-white invoice-footer'>
             <section className='container-width px-3 lg:px-6'>
                 <div className='hidden lg:block py-10 max-w-screen-2xl mx-auto px-4 lg:px-6'>
                     <ul className='flex justify-center items-center gap-8 font-poppins text-[#151515] text-sm font-semibold'>
