@@ -5,6 +5,7 @@ import Link from "next/link";
 import { MdOutlinePayments } from "react-icons/md";
 import { IoBagHandle } from "react-icons/io5";
 import Image from "next/image";
+import InfoCheckoutBtn from "./components/InfoCheckoutBtn";
 const url = process.env.NEXT_PUBLIC_BASE_URL;
 
 
@@ -117,11 +118,14 @@ const Checkout = async () => {
                             <p className="font-bold text-xl text-red-600">${((cart?.cartTotalPrice + (cart?.cartTotalPrice > 0 ? 60 : 0)) - cart?.cartDiscount).toFixed(2) || "00.00"}</p>
                         </div>
                         <div className="flex items-center gap-2">
-                            <Link
-                                href="/user/payment"
-                                className="w-full inline-flex items-center justify-center gap-1.5 bg-orange-400 hover:bg-orange-500 duration-300 text-white px-5 py-2.5 rounded font-semibold text-base mt-8 text-center">
-                                PROCEED TO PAY <MdOutlinePayments className="text-xl" />
-                            </Link>
+                            {account?.addresses?.length < 0 || account.phoneNumber === null ?
+                                <InfoCheckoutBtn />
+                                :
+                                <Link
+                                    href="/user/payment"
+                                    className="w-full inline-flex items-center justify-center gap-1.5 bg-orange-400 hover:bg-orange-500 duration-300 text-white px-5 py-2.5 rounded font-semibold text-base mt-8 text-center">
+                                    PROCEED TO PAY <MdOutlinePayments className="text-xl" />
+                                </Link>}
                         </div>
                     </div>
                 </div>
