@@ -39,29 +39,50 @@ export const authOptions = {
     },
     callbacks: {
         async signIn({ user, account, profile, email, credentials }) {
-            console.log({ user, account, profile, email, credentials });
-            // if (account) {
-            //     try {
-            //         const { provider, providerAccountId } = account;
-            //         const { email: user_email, image, name } = user;
-            //         const payload = { role: "user", provider, providerAccountId, email, image, name };
-            //         // console.log(payload);
 
-            //         const customersCollection = dbConnect(collectionsNames.customersCollection);
-            //         const isUserExist = await customersCollection.findOne({
-            //             $or: [
-            //                 { providerAccountId: providerAccountId },
-            //                 { email: user_email }
-            //             ]
-            //         });
-            //         if (!isUserExist) {
-            //             await customersCollection.insertOne(payload)
-            //         }
-            //     } catch (error) {
-            //         console.log(error);
-            //         return false
-            //     }
-            // }
+            if (account.provider === "google") {
+                let uid;
+                let exists = true;
+
+                try {
+                    const { provider, providerAccountId } = account;
+                    const { email, image, name } = user;
+
+                    const customersCollection = dbConnect(collectionsNames.customersCollection);
+                    const isUserExist = await customersCollection.findOne({ $or: [{ providerAccountId: providerAccountId }, { email: email }] });
+
+                    if (!isUserExist) {
+                        while (exists) {
+                            const pin = Math.floor(100000 + Math.random() * 900000);
+                            uid = "GSHOP-" + pin;
+
+                            // Check database if this uid already exists
+                            const user = await customersCollection.findOne({ uid });
+                            exists = !!user;
+                        };
+
+                        const userData = {
+                            displayName: name,
+                            phoneNumber: null,
+                            email: email,
+                            password: null,
+                            photoURL: image,
+                            accountType: "Google",
+                            createdAt: new Date(),
+                            updatedAt: new Date(),
+                            uid: uid,
+                            role: "user",
+                            provider,
+                            providerAccountId
+                        }
+                        await customersCollection.insertOne(userData)
+                    }
+                }
+                catch (error) {
+                    console.log(error);
+                    return false
+                }
+            }
             revalidatePath("/");
             return true
         }
