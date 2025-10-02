@@ -118,7 +118,7 @@ const Checkout = async () => {
                             <p className="font-bold text-xl text-red-600">${((cart?.cartTotalPrice + (cart?.cartTotalPrice > 0 ? 60 : 0)) - cart?.cartDiscount).toFixed(2) || "00.00"}</p>
                         </div>
                         <div className="flex items-center gap-2">
-                            {account?.addresses?.length < 0 || account.phoneNumber === null ?
+                            {!account.addresses?.length || account.phoneNumber === null ?
                                 <InfoCheckoutBtn />
                                 :
                                 <Link
