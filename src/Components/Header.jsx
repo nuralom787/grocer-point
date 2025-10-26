@@ -53,7 +53,7 @@ const Header = async () => {
                                 Category
                                 <IoIosArrowDown />
                             </div>
-                            <ul tabIndex={0} className="dropdown-content menu bg-white rounded-box z-1 min-w-max max-h-screen overflow-y-auto p-2 pt-3 mt-2 shadow-sm">
+                            <ul tabIndex={0} className="dropdown-content menu bg-white rounded-box z-[9999] min-w-max max-h-[500] overflow-y-auto p-2 pt-3 mt-2 shadow-sm grid grid-cols-2 gap-2">
                                 {categories?.map(category => <li key={category._id}>
                                     <Link
                                         href={`/search?category=${encodeURIComponent(category.parent)}&_id=${category._id}`}
@@ -69,10 +69,10 @@ const Header = async () => {
                                 }
                             </ul>
                         </div>
-                        <Link className="hover:text-green-900 duration-300" href="/">About Us</Link>
-                        <Link className="hover:text-green-900 duration-300" href="/">Contact Us</Link>
-                        <Link className="hover:text-green-900 duration-300" href="/">Trams & Conditions</Link>
-                        <Link className="text-red-600 bg-red-200 relative px-3 py-1 rounded" href="/">
+                        <Link className="hover:text-green-900 duration-300" href="/about-us">About Us</Link>
+                        <Link className="hover:text-green-900 duration-300" href="/contact-us">Contact Us</Link>
+                        <Link className="hover:text-green-900 duration-300" href="/trams&conditions">Trams & Conditions</Link>
+                        <Link className="text-red-600 bg-red-200 relative px-3 py-1 rounded" href="/offers">
                             Offers
                             <div className="absolute -top-1 -right-1 inline-grid *:[grid-area:1/1]">
                                 <div className="status h-2.5 w-2.5 bg-red-600 animate-ping"></div>
@@ -81,8 +81,8 @@ const Header = async () => {
                         </Link>
                     </div>
                     <div className="space-x-6 font-semibold font-poppins text-sm">
-                        <Link className="hover:text-green-900 duration-300" href="/">Privacy Policy</Link>
-                        <Link className="hover:text-green-900 duration-300" href="/">Refound Policy</Link>
+                        <Link className="hover:text-green-900 duration-300" href="/privacy-policy">Privacy Policy</Link>
+                        <Link className="hover:text-green-900 duration-300" href="/refound-policy">Refound Policy</Link>
                     </div>
                 </div>
             </div>

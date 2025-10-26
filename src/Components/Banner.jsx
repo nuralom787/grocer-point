@@ -109,10 +109,17 @@ const Banner = () => {
                             <div className='grid grid-cols-2 xl:grid-cols-1'>
                                 {coupons?.slice(0, 2).map(coupon => <div
                                     key={coupon._id}
-                                    className='flex justify-between items-center my-4 mx-2 bg-white rounded-lg'
+                                    className='flex justify-between items-center my-3.5 mx-2 bg-white rounded-lg'
                                 >
-                                    <div className='relative border-r-2 border-dashed border-gray-600 w-full flex items-center gap-4 p-4 font-poppins'>
-                                        <img className='w-16 xl:w-24' src={coupon.logo} alt="" />
+                                    <div className='relative border-r-2 border-dashed border-gray-600 w-full flex items-center gap-4 p-3.5 font-poppins'>
+                                        <Image
+                                            src={coupon.logo}
+                                            alt="Coupon Logo"
+                                            width={100}
+                                            height={100}
+                                            loading="eager"
+                                            className='w-16 xl:w-24'
+                                        />
                                         <div className='space-y-2'>
                                             <div className='inline-flex items-center'>
                                                 <p><span className='text-red-700 text-xl font-bold'>{coupon.discountPercentage}%</span> Off</p>
@@ -131,8 +138,8 @@ const Banner = () => {
                                                 }
                                             </div>
                                         </div>
-                                        <div className='bg-gray-50 w-7 h-7 rounded-full absolute -top-3.5 -right-3.5 z-10'></div>
-                                        <div className='bg-gray-50 w-7 h-7 rounded-full absolute -bottom-3.5 -right-3.5 z-10'></div>
+                                        <div className='bg-gray-50 w-7 h-7 rounded-full absolute -top-3 -right-3.5 z-10'></div>
+                                        <div className='bg-gray-50 w-7 h-7 rounded-full absolute -bottom-3 -right-3.5 z-10'></div>
                                     </div>
                                     <div className='text-center space-y-2'>
                                         <button
