@@ -15,13 +15,13 @@ const DiscountProducts = async () => {
                     See Our latest discounted products below. Choose your daily needs from here <br /> and get a special discount with free shipping.
                 </p>
             </div>
-            <div className="py-14">
+            <div className="py-4 lg:py-14">
                 <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2">
                     {
                         products?.slice(0, 18).map(product => <div className="bg-white rounded-md relative" key={product?._id}>
                             <Link className="group" href={`/product/${product?._id.toString()}`}>
-                                <p className="absolute top-2 left-2 bg-gray-200 px-3 py-1 rounded-full text-green-900 text-xs z-10">
-                                    Stock: <span className="text-red-700">{product?.quantity}</span>
+                                <p className="absolute top-2 left-2 bg-gray-200 px-3 py-1 rounded-full text-green-700 text-xs font-bold z-10">
+                                    Stock: <span className="text-red-500">{product?.quantity}</span>
                                 </p>
                                 {product?.discount > 0 && <p className="absolute top-2 right-2 bg-orange-500 px-3 py-1 rounded-full text-white text-xs z-10">
                                     {product?.discount?.toFixed(2)}% Off

@@ -2,8 +2,10 @@
 @plugin "daisyui";
 
 .container-width {
-    width: 96rem;
-    margin: 0% auto;
+    /* width: 96rem; */
+    /* margin: 0% auto; */
+    max-width: var(--breakpoint-2xl);
+    margin-inline: auto;
 }
 
 @media print {

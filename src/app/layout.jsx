@@ -23,7 +23,7 @@ export default function RootLayout({ children }) {
     <html lang="en" data-theme="light">
       <ToastContainer />
       <NextAuthSessionProviders>
-        <body className={`${poppins.className} bg-gray-50`}>
+        <body className={`${poppins.className} bg-gray-100`}>
           <InfoNav />
           <Header />
           <main className="container-width px-2 lg:px-6">

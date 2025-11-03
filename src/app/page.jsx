@@ -5,7 +5,7 @@ import PopularProducts from "@/Components/PopularProducts";
 
 export default function Home() {
   return (
-    <div className="space-y-16">
+    <div className="space-y-8 md:space-y-16">
       <Banner />
       <Categories />
       <PopularProducts />

@@ -51,9 +51,9 @@ const Banner = () => {
     };
 
     return (
-        <div className="mt-6">
+        <div className="mt-0.5 lg:mt-6">
             <div className="flex flex-col xl:flex-row justify-between items-start gap-6 text-[#151515] py-2">
-                <div className='w-full xl:w-3/5'>
+                <div className='w-fit xl:w-3/5'>
                     <Carousel
                         autoPlay={true}
                         showArrows={false}
@@ -65,28 +65,46 @@ const Banner = () => {
                         showThumbs={false}
                     >
                         <div className='relative'>
-                            <div className='font-poppins w-3/6 absolute top-1/4 left-5 lg:left-14 text-start space-y-0.5 md:space-y-2 lg:space-y-4'>
+                            <div className="font-poppins w-5/6 md:w-3/6 absolute top-1/4 left-5 lg:left-14 text-start space-y-1 md:space-y-2 lg:space-y-4">
                                 <h1 className='font-extrabold text-base lg:text-3xl text-[#151515] line-clamp-1 lg:line-clamp-none'>The Best Quality Products Guaranteed!</h1>
                                 <p className='text-gray-700 text-xs md:text-sm line-clamp-1 md:line-clamp-2 lg:line-clamp-3'>Intrinsicly fashion performance based products rather than accurate benefits...</p>
                                 <button className='font-semibold text-sm text-white px-3.5 lg:px-6 py-1.5 lg:py-3 rounded-full lg:rounded-md bg-green-900 cursor-pointer mt-3 lg:mt-0'>Shop Now</button>
                             </div>
-                            <Image src={slider1} alt="Grocer Point Banner 1 Logo" loading="eager" />
+                            <Image
+                                src={slider1}
+                                alt="Grocer Point Banner 1 Logo"
+                                loading="eager"
+                                width={950}
+                                height={400}
+                            />
                         </div>
                         <div className='relative'>
-                            <div className='font-poppins w-3/6 absolute top-1/4 left-5 lg:left-14 text-start space-y-0.5 md:space-y-2 lg:space-y-4'>
+                            <div className="font-poppins w-5/6 md:w-3/6 absolute top-1/4 left-5 lg:left-14 text-start space-y-1 md:space-y-2 lg:space-y-4">
                                 <h1 className='font-extrabold text-base lg:text-3xl text-[#151515] line-clamp-1 lg:line-clamp-none'>Best Different Type of Grocery Store</h1>
                                 <p className='text-gray-700 text-xs md:text-sm line-clamp-1 md:line-clamp-2 lg:line-clamp-3'>Intrinsicly fashion performance based products rather than accurate benefits...</p>
                                 <button className='font-semibold text-sm text-white px-3.5 lg:px-6 py-1.5 lg:py-3 rounded-full lg:rounded-md bg-green-900 cursor-pointer mt-3 lg:mt-0'>Shop Now</button>
                             </div>
-                            <Image src={slider2} alt="Grocer Point Banner 2 Logo" loading="eager" />
+                            <Image
+                                src={slider2}
+                                alt="Grocer Point Banner 2 Logo"
+                                loading="eager"
+                                width={950}
+                                height={400}
+                            />
                         </div>
                         <div className='relative'>
-                            <div className='font-poppins w-3/6 absolute top-1/4 left-5 lg:left-14 text-start space-y-0.5 md:space-y-2 lg:space-y-4'>
+                            <div className="font-poppins w-5/6 md:w-3/6 absolute top-1/4 left-5 lg:left-14 text-start space-y-1 md:space-y-2 lg:space-y-4">
                                 <h1 className='font-extrabold text-base lg:text-3xl text-[#151515] line-clamp-1 lg:line-clamp-none'>Best Different Type of Grocery Store</h1>
                                 <p className='text-gray-700 text-xs md:text-sm line-clamp-1 md:line-clamp-2 lg:line-clamp-3'>Intrinsicly fashion performance based products rather than accurate benefits...</p>
                                 <button className='font-semibold text-sm text-white px-3.5 lg:px-6 py-1.5 lg:py-3 rounded-full lg:rounded-md bg-green-900 cursor-pointer mt-3 lg:mt-0'>Shop Now</button>
                             </div>
-                            <Image src={slider3} alt="Grocer Point Banner 3 Logo" loading="eager" />
+                            <Image
+                                src={slider3}
+                                alt="Grocer Point Banner 3 Logo"
+                                loading="eager"
+                                width={950}
+                                height={400}
+                            />
                         </div>
                     </Carousel>
                 </div>
@@ -138,8 +156,8 @@ const Banner = () => {
                                                 }
                                             </div>
                                         </div>
-                                        <div className='bg-gray-50 w-7 h-7 rounded-full absolute -top-3 -right-3.5 z-10'></div>
-                                        <div className='bg-gray-50 w-7 h-7 rounded-full absolute -bottom-3 -right-3.5 z-10'></div>
+                                        <div className='bg-gray-100 w-7 h-7 rounded-b-full absolute -top-2 -right-3.5 z-10'></div>
+                                        <div className='bg-gray-100 w-7 h-7 rounded-t-full absolute -bottom-2 -right-3.5 z-10'></div>
                                     </div>
                                     <div className='text-center space-y-2'>
                                         <button
@@ -155,9 +173,9 @@ const Banner = () => {
                     </div>
                 </div>
             </div>
-            <div className='bg-[#ffedd5] my-6 p-8 rounded-lg font-poppins flex flex-col md:flex-row justify-between items-start lg:items-center gap-4'>
-                <div className='w-4/6'>
-                    <h1 className='text-xl font-bold text-green-600'>100% Natural Quality Organic Product</h1>
+            <div className='bg-[#ffedd5] my-3 md:my-6 px-4 py-6 md:p-8 rounded-lg font-poppins flex flex-col md:flex-row justify-between items-center gap-4'>
+                <div className='w-4/6 text-center md:text-start'>
+                    <h1 className='text-lg md:text-xl font-bold text-green-600'>100% Natural Quality Organic Product</h1>
                     <p className='font-medium text-sm text-gray-500'>See Our latest discounted products from here and get a special discount product</p>
                 </div>
                 <button className='font-semibold text-sm text-white bg-green-900 px-5 py-2 rounded-full cursor-pointer'>

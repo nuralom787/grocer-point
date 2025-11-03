@@ -24,8 +24,8 @@ const PopularProducts = async () => {
                             key={product?._id}
                         >
                             <Link className="group" href={`/product/${product?._id.toString()}`}>
-                                <p className="absolute top-2 left-2 bg-gray-200 px-3 py-1 rounded-full text-green-900 text-xs z-10">
-                                    Stock: <span className="text-red-700">{product?.quantity}</span>
+                                <p className="absolute top-2 left-2 bg-gray-200 px-3 py-1 rounded-full text-green-700 text-xs font-bold z-10">
+                                    Stock: <span className="text-red-500">{product?.quantity}</span>
                                 </p>
                                 {product?.discount > 0 && <p className="absolute top-2 right-2 bg-orange-500 px-3 py-1 rounded-full text-white text-xs z-10">
                                     {product?.discount?.toFixed(2)}% Off
@@ -35,8 +35,8 @@ const PopularProducts = async () => {
                                         className="mx-auto grow scale-90 group-hover:scale-100 duration-300"
                                         src={product?.image}
                                         alt={product?.title}
-                                        width={100}
-                                        height={100}
+                                        width={300}
+                                        height={200}
                                         loading="eager"
                                     />
                                 </div>

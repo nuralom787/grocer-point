@@ -14,7 +14,7 @@ const Categories = async () => {
                 <h1 className="text-xl text-[#151515] font-semibold">Featured Categories</h1>
                 <p className="text-sm text-gray-500 font-medium leading-6 lg:leading-10">Choose your necessary products from this feature categories.</p>
             </div>
-            <div className="py-8 lg:py-14">
+            <div className="py-4 lg:py-14">
                 <ul className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-0.5">
                     {
                         categories?.map(category => <Link

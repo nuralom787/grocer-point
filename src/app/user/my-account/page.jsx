@@ -126,10 +126,10 @@ const MyAccount = async () => {
                                                             </td>
                                                             <td className="text-center font-medium">{order.paymentMethod}</td>
                                                             <td className="text-center font-medium">
-                                                                {order.status === "Pending" && <span className="text-orange-600 font-semibold">Pending</span>}
-                                                                {order.status === "Processing" && <span className="text-indigo-600 font-semibold">Processing</span>}
-                                                                {order.status === "Delivered" && <span className="text-emerald-600 font-semibold">Delivered</span>}
-                                                                {order.status === "Cancel" && <span className="text-red-600 font-semibold">Cancel</span>}
+                                                                {order.status === "Pending" && <span className="text-orange-600 bg-orange-100 px-3 py-1 rounded-full font-semibold text-xs">Pending</span>}
+                                                                {order.status === "Processing" && <span className="text-indigo-600 bg-indigo-100 px-3 py-1 rounded-full font-semibold text-xs">Processing</span>}
+                                                                {order.status === "Delivered" && <span className="text-emerald-600 bg-emerald-100 px-3 py-1 rounded-full font-semibold text-xs">Delivered</span>}
+                                                                {order.status === "Cancel" && <span className="text-red-600 bg-red-100 px-3 py-1 rounded-full font-semibold text-xs">Cancel</span>}
                                                             </td>
                                                             <td className="text-center font-bold">${order.total.toFixed(2)}</td>
                                                             <td className="text-center">
